@@ -1,0 +1,39 @@
+.cardContainer {
+  width: 312px;
+  margin: 0 15px 30px 0;
+
+  .recipeImg {
+    width: 312px;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .title {
+    margin: 5px 0;
+  }
+
+  .introductionGroup {
+    margin-bottom: 10px;
+    .introduction {
+      display: flex;
+      flex-flow: row nowrap;
+      svg {
+        color: orange;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .labelGroup {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    .label {
+      margin: 0 5px 5px 0;
+    }
+  }
+}

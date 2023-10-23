@@ -1,0 +1,20 @@
+.homePage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+}
+
+.searchContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  font-size: 32px;
+  margin: 0 0 10px;
+  color: #fff;
+}

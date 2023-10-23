@@ -1,8 +1,13 @@
+import { RouterProvider } from 'react-router-dom';
+import routerConfig from './router';
+import { Toaster } from 'react-hot-toast';
+
 function App() {
   return (
-    <div className="App">
-      Taste-Treasure
-    </div>
+    <>
+      <Toaster />
+      <RouterProvider router={routerConfig} />
+    </>
   );
 }
 
