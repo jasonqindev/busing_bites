@@ -1,6 +1,13 @@
 .cardContainer {
   width: 312px;
   margin: 0 15px 30px 0;
+  cursor: pointer;
+
+  &:hover {
+    .title {
+      text-decoration: underline;
+    }
+  }
 
   .recipeImg {
     width: 312px;

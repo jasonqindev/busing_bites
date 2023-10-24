@@ -1,6 +1,10 @@
 import { autoCompleteSize } from "const";
 import axios from "./ajax";
-import { AutoCompleteItemProps, RecipeResultsProps } from "types/recipe";
+import {
+  AutoCompleteItemProps,
+  RecipeProps,
+  RecipeResultsProps,
+} from "types/recipe";
 
 export const loadAutocompleteService = async (query: string) => {
   const url = `/recipes/autocomplete?query=${query}&number=${autoCompleteSize}`;
@@ -9,11 +13,21 @@ export const loadAutocompleteService = async (query: string) => {
   return data;
 };
 
-export const loadRecipeService = async () => {
+export const loadComplexSearchService = async () => {
   const url = "/recipes/complexSearch";
   const search = window.location.search
     .appendQueryParam("number", "20")
     .appendQueryParam("addRecipeInformation", "true");
   const data = (await axios.get(url + search)) as RecipeResultsProps;
+  return data;
+};
+
+export const loadRecipeInformation = async (id: string) => {
+  const url = `/recipes/${id}/information`.appendQueryParam(
+    "includeNutrition",
+    "true"
+  );
+
+  const data = (await axios.get(url)) as RecipeProps;
   return data;
 };

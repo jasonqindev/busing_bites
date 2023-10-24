@@ -1,7 +1,5 @@
-// import styled from "@emotion/styled";
 import SearchBox from "./componets/searchBox";
 import styles from "./home.module.scss";
-
 
 function Home() {
   return (

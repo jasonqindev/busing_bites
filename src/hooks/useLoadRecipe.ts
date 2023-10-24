@@ -1,12 +1,20 @@
 import { useRequest } from "ahooks";
-import { loadAutocompleteService, loadRecipeService } from "services/recipe";
-import { AutoCompleteItemProps, RecipeResultsProps } from "types/recipe";
+import {
+  loadAutocompleteService,
+  loadComplexSearchService,
+  loadRecipeInformation,
+} from "services/recipe";
+import {
+  AutoCompleteItemProps,
+  RecipeProps,
+  RecipeResultsProps,
+} from "types/recipe";
 import { useUrlQueryParam } from "utils";
 
 export const useLoadRecipeData = () => {
   const [{ query, offset }] = useUrlQueryParam(["query", "offset"]);
 
-  const { loading, error, data } = useRequest(loadRecipeService, {
+  const { loading, error, data } = useRequest(loadComplexSearchService, {
     refreshDeps: [query, offset],
   });
 
@@ -31,4 +39,18 @@ export const useLoadAutoComplete = (
   });
 
   return { run, error, data, loading };
+};
+
+export const useLoadRecipeInfo = (id: string) => {
+  const pack = async () => {
+    return await loadRecipeInformation(id);
+  };
+
+  const { loading, run, error, data } = useRequest(pack, {
+    debounceWait: 500,
+  });
+
+  const recipeData = (data ?? {}) as RecipeProps;
+
+  return { run, error, recipeData, loading };
 };

@@ -1,4 +1,25 @@
-.recipeYield {
+.recipeListContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100vw;
+  height: calc(100vh - 63px);
+  overflow: hidden;
+
+  .nav {
+    flex: 0 0 250px;
+    width: 250px;
+    border-right: 1px solid #dee2e6;
+  }
+
+  .recipeYield {
+    flex: 1;
+    padding: 50px;
+  }
+}
+
+.recipeGroup {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;

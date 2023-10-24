@@ -6,13 +6,19 @@ import { IoMdTime } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { cookingDifficulty } from "../utils";
+import { useNavigate } from "react-router-dom";
 const RecipeCard = ({
+  id,
   image,
   title,
   dishTypes = [],
   readyInMinutes,
   servings,
 }: RecipeCardProps) => {
+  const nav = useNavigate();
+  const handleShowDetail = () => {
+    nav(`/recipes/${id}`);
+  };
   return (
     <Card
       className={styles.cardContainer}
@@ -20,6 +26,7 @@ const RecipeCard = ({
       padding="lg"
       radius="md"
       withBorder
+      onClick={handleShowDetail}
     >
       <Card.Section>
         <Image className={styles.recipeImg} src={image} alt={title} />
