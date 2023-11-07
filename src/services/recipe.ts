@@ -4,7 +4,7 @@ import {
   AutoCompleteItemProps,
   RecipeProps,
   RecipeResultsProps,
-} from "types/recipe";
+} from "types/recipeAjax";
 
 export const loadAutocompleteService = async (query: string) => {
   const url = `/recipes/autocomplete?query=${query}&number=${autoCompleteSize}`;
@@ -13,9 +13,10 @@ export const loadAutocompleteService = async (query: string) => {
   return data;
 };
 
-export const loadComplexSearchService = async () => {
+export const loadComplexSearchService = async (offset: number) => {
   const url = "/recipes/complexSearch";
   const search = window.location.search
+    .appendQueryParam("offset", offset.toString())
     .appendQueryParam("number", "20")
     .appendQueryParam("addRecipeInformation", "true");
   const data = (await axios.get(url + search)) as RecipeResultsProps;

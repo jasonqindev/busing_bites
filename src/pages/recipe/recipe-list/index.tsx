@@ -1,24 +1,72 @@
 import { useLoadRecipeData } from "hooks/useLoadRecipe";
-import { ScrollArea } from "@mantine/core";
+import { Box, ScrollArea, LoadingOverlay } from "@mantine/core";
 import RecipeCard from "./components/recipeCard";
 import Pagination from "./components/pagination";
 import styles from "./recipeList.module.scss";
+import { getFormComponents } from "components/formComponents";
+import { useEffect, useRef, useState } from "react";
+
+const formCompLayout = [
+  "recipe",
+  "cuisines",
+  "diet",
+  "intolerances",
+  "type",
+  "equipment",
+  "includeIngreds",
+  "excludeIngreds",
+];
 
 const RecipeList = () => {
-  const { results: recipeList, totalResults } = useLoadRecipeData();
+  const [page, setPage] = useState(1);
+  const viewport = useRef<HTMLDivElement>(null);
+  const {
+    results: recipeList,
+    totalResults,
+    loading,
+  } = useLoadRecipeData(page);
+
+  const pageChange = (page: number) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    viewport.current!.scrollTo({ top: 0, behavior: "smooth" });
+  }, [recipeList]);
 
   return (
     <main className={styles.recipeListContainer}>
-      <aside className={styles.nav}></aside>
-      <ScrollArea h={window.innerHeight - 63} className={styles.recipeYield}>
+      <aside className={styles.nav}>
+        {formCompLayout.map((c, index) => (
+          <Box key={index} className={styles.formControl}>
+            {getFormComponents(c)}
+          </Box>
+        ))}
+      </aside>
+      <ScrollArea
+        h={window.innerHeight - 63}
+        className={styles.recipeYield}
+        viewportRef={viewport}
+      >
+        <LoadingOverlay
+          visible={loading}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
         <div className={styles.recipeGroup}>
           {recipeList &&
-            recipeList.length &&
+            !!recipeList.length &&
             recipeList.map((recipe) => {
               return <RecipeCard key={recipe.id} {...recipe} />;
             })}
         </div>
-        <Pagination totalResults={totalResults} />
+        {totalResults > 20 && (
+          <Pagination
+            totalResults={totalResults}
+            page={page}
+            pageChange={pageChange}
+          />
+        )}
       </ScrollArea>
     </main>
   );

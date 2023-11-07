@@ -54,6 +54,13 @@
 .advancedOptions {
   width: 100%;
   height: 500px;
+  padding: 30px 30px;
   border-radius: 10px;
   background-color: #fff;
+  overflow: scroll;
+
+  .formControl {
+    width: 250px;
+    margin-bottom: 20px;
+  }
 }
