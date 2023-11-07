@@ -1,4 +1,4 @@
-import { RecipeProps } from "types/recipe";
+import { RecipeProps } from "types/recipeAjax";
 import styles from "./components.module.scss";
 import {
   Timeline,

@@ -1,4 +1,6 @@
 import { useRequest } from "ahooks";
+import { PageToOffset } from "pages/recipe/recipe-list/utils";
+import { useLocation } from "react-router-dom";
 import {
   loadAutocompleteService,
   loadComplexSearchService,
@@ -8,14 +10,17 @@ import {
   AutoCompleteItemProps,
   RecipeProps,
   RecipeResultsProps,
-} from "types/recipe";
-import { useUrlQueryParam } from "utils";
+} from "types/recipeAjax";
 
-export const useLoadRecipeData = () => {
-  const [{ query, offset }] = useUrlQueryParam(["query", "offset"]);
-
-  const { loading, error, data } = useRequest(loadComplexSearchService, {
-    refreshDeps: [query, offset],
+export const useLoadRecipeData = (page: number) => {
+  const { search } = useLocation();
+  const offset = PageToOffset(page);
+  const pack = async () => {
+    return await loadComplexSearchService(offset);
+  };
+  const { loading, error, data } = useRequest(pack, {
+    refreshDeps: [search, page],
+    debounceWait: 500,
   });
 
   const { results, totalResults } = (data as RecipeResultsProps) || {};

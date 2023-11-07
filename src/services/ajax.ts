@@ -1,6 +1,9 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const apiUrl = process.env.REACT_APP_NUTRITION_URL;
+const api_key = process.env.REACT_APP_API_KEY;
+
 export type ResponseType = {
   code: number;
   data?: ResponseDataType;
@@ -12,16 +15,13 @@ export type ResponseDataType = {
 };
 
 const instance = axios.create({
-  baseURL: "https://api.spoonacular.com",
+  baseURL: apiUrl,
   timeout: 10 * 1000,
 });
 
 instance.interceptors.request.use(
   function (config) {
-    config.url = config.url?.appendQueryParam(
-      "apiKey",
-      "25a54ebd06604ee4bbf74d64931480fb"
-    );
+    config.url = config.url?.appendQueryParam("apiKey", api_key || "");
     return config;
   },
   function (error) {
