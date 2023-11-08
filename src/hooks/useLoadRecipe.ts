@@ -12,11 +12,25 @@ import {
   RecipeResultsProps,
 } from "types/recipeAjax";
 
-export const useLoadRecipeData = (page: number) => {
+export interface LoadRecipeDataType {
+  page?: number;
+  number?: number;
+  addRecipeInformation?: boolean;
+}
+
+export const useLoadRecipeData = ({
+  page,
+  number,
+  addRecipeInformation,
+}: LoadRecipeDataType) => {
   const { search } = useLocation();
   const offset = PageToOffset(page);
   const pack = async () => {
-    return await loadComplexSearchService(offset);
+    return await loadComplexSearchService({
+      offset,
+      number,
+      addRecipeInformation,
+    });
   };
   const { loading, error, data } = useRequest(pack, {
     refreshDeps: [search, page],
@@ -51,8 +65,28 @@ export const useLoadRecipeInfo = (id: string) => {
     return await loadRecipeInformation(id);
   };
 
+  const { loading, error, data } = useRequest(pack, {
+    debounceWait: 500,
+  });
+
+  const recipeData = (data ?? {}) as RecipeProps;
+
+  return { error, recipeData, loading };
+};
+
+export const useLoadRecipeInfoByManual = (
+  onSuccess?: (res: RecipeProps) => void
+) => {
+  const pack = async (id: string) => {
+    return await loadRecipeInformation(id);
+  };
+
   const { loading, run, error, data } = useRequest(pack, {
     debounceWait: 500,
+    manual: true,
+    onSuccess: (res) => {
+      onSuccess && onSuccess(res);
+    },
   });
 
   const recipeData = (data ?? {}) as RecipeProps;

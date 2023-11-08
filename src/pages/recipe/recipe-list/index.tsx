@@ -24,7 +24,7 @@ const RecipeList = () => {
     results: recipeList,
     totalResults,
     loading,
-  } = useLoadRecipeData(page);
+  } = useLoadRecipeData({ page, addRecipeInformation: true });
 
   const pageChange = (page: number) => {
     setPage(page);
