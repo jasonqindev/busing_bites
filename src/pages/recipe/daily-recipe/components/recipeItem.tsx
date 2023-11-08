@@ -3,11 +3,17 @@ import { Image, Text } from "@mantine/core";
 import { FC } from "react";
 import { RecipeCardProps } from "types/recipeAjax";
 
-const RecipeItem: FC<Partial<RecipeCardProps>> = ({ title, image }) => {
+interface PropsType extends Partial<RecipeCardProps> {
+  lineClamp?: number;
+}
+
+const RecipeItem: FC<PropsType> = ({ title, image, lineClamp = undefined }) => {
   return (
     <div className={styles.recipeItem}>
       <Image src={image} className={styles.img} />
-      <Text ml={20}>{title}</Text>
+      <Text ml={20} lineClamp={lineClamp}>
+        {title}
+      </Text>
     </div>
   );
 };

@@ -14,7 +14,9 @@ interface PropsType {
 const RecipeSearch: FC<PropsType> = ({ recipes, loading }) => {
   return (
     <div className={styles.searchField}>
-      <RecipeInput label={"recipe"} />
+      <div className={styles.searchInput}>
+        <RecipeInput label={"recipe search"} />
+      </div>
       <div className={styles.recipeList}>
         <LoadingOverlay visible={loading} zIndex={1000} />
         {recipes.map((c) => (

@@ -48,11 +48,7 @@ const RecipeList = () => {
         className={styles.recipeYield}
         viewportRef={viewport}
       >
-        <LoadingOverlay
-          visible={loading}
-          zIndex={1000}
-          overlayProps={{ radius: "sm", blur: 2 }}
-        />
+        <LoadingOverlay visible={loading} zIndex={1000} />
         <div className={styles.recipeGroup}>
           {recipeList &&
             !!recipeList.length &&

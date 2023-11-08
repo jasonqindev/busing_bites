@@ -7,14 +7,14 @@ import RecipeSearch from "./components/recipeSearch";
 import DailyMeatAnalyst from "./components/dailyMeatAnalyst";
 import { RecipeCardProps } from "types/recipeAjax";
 import RecipeItem from "./components/recipeItem";
+import NutritionCalculator from "./components/nutritionCalculator";
 
 const DailyRecipe = () => {
   const [page, setPage] = useState(1);
-  const {
-    results: list,
-    totalResults,
-    loading,
-  } = useLoadRecipeData({ page, addRecipeInformation: true, number: 50 });
+  const { results, totalResults, loading } = useLoadRecipeData({
+    page,
+    number: 50,
+  });
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([]);
   const [activeItem, setActiveItem] = useState<RecipeCardProps | null>(null);
   const { id: activeId, title = "", image = "" } = activeItem || {};
@@ -23,8 +23,8 @@ const DailyRecipe = () => {
   const [dinnerList, setDinnerList] = useState<RecipeCardProps[]>([]);
 
   useEffect(() => {
-    setRecipes(list || []);
-  }, [list]);
+    setRecipes(results || []);
+  }, [results]);
 
   const getActiveRecipeByData = (id: string) => {
     return recipes.find((d) => d.id === Number(id)) || null;
@@ -61,18 +61,21 @@ const DailyRecipe = () => {
       <div className={styles.container}>
         <DndContent onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <DragOverComp activeId={activeId ? Number(activeId) : null}>
-            <RecipeItem title={title} image={image} />
+            <RecipeItem title={title} image={image} lineClamp={1} />
           </DragOverComp>
           <div className={styles.recipeSearchField}>
             <div className={styles.left}>
               <RecipeSearch recipes={recipes} loading={loading} />
             </div>
-            <div className={styles.right}>
+            <div className={styles.medium}>
               <DailyMeatAnalyst
                 breakfastList={breakfastList}
                 lunchList={lunchList}
                 dinnerList={dinnerList}
               />
+            </div>
+            <div className={styles.right}>
+              <NutritionCalculator />
             </div>
           </div>
         </DndContent>
