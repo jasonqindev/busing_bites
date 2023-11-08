@@ -5,7 +5,10 @@ import {
     signOut,
     signInWithEmailAndPassword,
     NextOrObserver,
-    User
+    User,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    sendEmailVerification
 } from 'firebase/auth';
 import { getFirebaseConfig } from './firebaseSetup';
 
@@ -17,9 +20,30 @@ export const signInUser = async (
     password: string
 ) => {
     if (!email && !password) return;
-    
+
     return await signInWithEmailAndPassword(auth, email, password)
 }
+
+export const registerUser = async (
+    name: string,
+    email: string,
+    password: string
+) => {
+    try {
+        await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
+            console.log(err)
+        );
+        if (!auth.currentUser) return;
+        await sendEmailVerification(auth.currentUser).catch((err) =>
+            console.log(err)
+        );
+        await updateProfile(auth.currentUser, { displayName: name }).catch(
+            (err) => console.log(err)
+        );
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 export const userStateListener = (callback: NextOrObserver<User>) => {
     return onAuthStateChanged(auth, callback)
