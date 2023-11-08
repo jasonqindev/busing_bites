@@ -1,13 +1,14 @@
-import { initializeApp } from "firebase/app";
 import {
+    NextOrObserver,
+    User,
     getAuth,
     onAuthStateChanged,
-    signOut,
     signInWithEmailAndPassword,
-    NextOrObserver,
-    User
+    signOut
 } from 'firebase/auth';
+
 import { getFirebaseConfig } from './firebaseSetup';
+import { initializeApp } from "firebase/app";
 
 const app = initializeApp(getFirebaseConfig());
 const auth = getAuth(app);
@@ -25,4 +26,4 @@ export const userStateListener = (callback: NextOrObserver<User>) => {
     return onAuthStateChanged(auth, callback)
 }
 
-export const SignOutUser = async () => await signOut(auth);
+export const signOutUser = async () => await signOut(auth);

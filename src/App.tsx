@@ -8,9 +8,7 @@ function App() {
   return (
     <>
       <Toaster />
-      <AuthProvider>
-        <RouterProvider router={routerConfig} />
-      </AuthProvider>
+      <RouterProvider router={routerConfig} />
     </>
   );
 }

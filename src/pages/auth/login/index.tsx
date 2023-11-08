@@ -1,26 +1,47 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { } from 'firebase/auth';
 
-import { redirect } from 'react-router-dom'
-import { Button, Divider, Group, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
-import SocialButton from './components/socialbutton';
+import { Anchor, Button, Checkbox, Divider, Group, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
+import { AuthContext, AuthProvider } from 'context/auth-context';
 import { BsApple, BsDiscord, BsGoogle, BsMicrosoft, BsTwitter } from 'react-icons/bs';
+import { FC, useContext, useState } from 'react';
+import { redirect, useNavigate } from 'react-router-dom'
+import { signInUser, signOutUser, userStateListener } from '../../../firebase/firebase';
 
+import SocialButton from './components/socialbutton';
 import styles from './login.module.scss';
-import { AuthContext } from 'context/auth-context';
 
 const Login: FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { currentUser } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
+    const [errored, setErrored] = useState(false);
+    const { setCurrentUser } = useContext(AuthContext);
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (currentUser === null) {
-            redirect('/');
+    userStateListener((user) => {
+        if (user) {
+            // for now
+            signOutUser()
+            // setCurrentUser(user)
+            // navigate('/')
         }
-    }, [currentUser]);
+    });
 
     const handleLogin = async () => {
-        // TODO: backend
+        if (!email && !password) return;
+
+        setLoading(true);
+        setErrored(false);
+
+        try {
+            await signInUser(email, password);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            setErrored(true);
+        }
+
+        setLoading(false);
     };
 
     return (
@@ -29,13 +50,18 @@ const Login: FC = () => {
                 <Title order={2} mb={10}>
                     Login
                 </Title>
-                <form onSubmit={(e) => e.preventDefault()}>
+
+                <form onSubmit={((e) => { e.preventDefault(); handleLogin() })}>
                     <Stack>
                         <TextInput
                             required
                             label="Email"
                             placeholder="john.doe@example.com"
                             radius="md"
+                            value={email}
+                            onChange={(e) => setEmail(e.currentTarget.value)}
+                            error={errored && "Invalid email or password"}
+                            type='email'
                         />
 
                         <PasswordInput
@@ -43,15 +69,31 @@ const Login: FC = () => {
                             label="Password"
                             placeholder="Your password"
                             radius="md"
+                            value={password}
+                            onChange={(e) => setPassword(e.currentTarget.value)}
+                            error={errored && "Invalid email or password"}
                         />
                     </Stack>
-                </form>
 
-                <Group justify="space-between" mt="lg">
-                    <Button type="submit" onClick={handleLogin} fullWidth>
-                        Login
-                    </Button>
-                </Group>
+                    <Group justify="space-between" mt="lg">
+                        <Checkbox label="Remember me" />
+                        <Anchor component="button" size="sm">
+                            Forgot password?
+                        </Anchor>
+                    </Group>
+
+                    <Group justify="space-between" mt="lg">
+                        <Button type="submit" onClick={handleLogin} disabled={loading} fullWidth>
+                            Login
+                        </Button>
+                    </Group>
+
+                    <Group mt="xs">
+                        <Anchor component='button' size='sm' onClick={() => navigate('/auth/register')}>
+                            Don't have an account?
+                        </Anchor>
+                    </Group>
+                </form>
 
                 <Divider label="Or sign in with" labelPosition="center" my="lg" />
 
