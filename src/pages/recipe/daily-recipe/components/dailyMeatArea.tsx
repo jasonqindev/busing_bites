@@ -13,7 +13,7 @@ interface PropsType {
   dinnerList: RecipeCardProps[];
 }
 
-const DailyMeatAnalyst: FC<PropsType> = ({
+const dailyMeatArea: FC<PropsType> = ({
   breakfastList,
   lunchList,
   dinnerList,
@@ -49,4 +49,4 @@ const DailyMeatAnalyst: FC<PropsType> = ({
   );
 };
 
-export default DailyMeatAnalyst;
+export default dailyMeatArea;

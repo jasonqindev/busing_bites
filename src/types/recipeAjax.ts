@@ -42,3 +42,7 @@ export interface RecipeProps {
   lowFodmap: string;
   extendedIngredients: any[];
 }
+
+export interface AnalystProps {
+  [key: string]: string;
+}

@@ -3,6 +3,8 @@ import { MantineProvider } from "@mantine/core";
 import "./index.css";
 import "@mantine/core/styles.css";
 import App from "./App";
+import store from "store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,8 +12,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   // <React.StrictMode>
-  <MantineProvider>
-    <App />
-  </MantineProvider>
+  <Provider store={store}>
+    <MantineProvider>
+      <App />
+    </MantineProvider>
+  </Provider>
   // </React.StrictMode>,
 );

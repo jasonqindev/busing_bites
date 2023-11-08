@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import DragOverComp from "components/dnd/dragOverComp";
 import { useLoadRecipeData } from "hooks/useLoadRecipe";
 import RecipeSearch from "./components/recipeSearch";
-import DailyMeatAnalyst from "./components/dailyMeatAnalyst";
+import DailyMeatAnalyst from "./components/dailyMeatArea";
 import { RecipeCardProps } from "types/recipeAjax";
 import RecipeItem from "./components/recipeItem";
-import NutritionCalculator from "./components/nutritionCalculator";
+import NutritionCalculator from "./components/nutritionAnalyst";
 
 const DailyRecipe = () => {
   const [page, setPage] = useState(1);
