@@ -6,7 +6,7 @@ import { GiForkKnifeSpoon } from "react-icons/gi";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { BsFillPeopleFill } from "react-icons/bs";
 
-import { RecipeProps } from "types/recipe";
+import { RecipeProps } from "types/recipeAjax";
 import { judgeItem } from "const";
 
 type DietOption =

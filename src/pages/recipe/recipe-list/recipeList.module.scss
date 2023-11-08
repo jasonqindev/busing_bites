@@ -1,4 +1,5 @@
 .recipeListContainer {
+  position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -8,14 +9,21 @@
   overflow: hidden;
 
   .nav {
-    flex: 0 0 250px;
-    width: 250px;
+    flex: 0 0 300px;
+    width: 3000px;
+    height: 100%;
+    padding: 30px 20px;
     border-right: 1px solid #dee2e6;
+    overflow: scroll;
+
+    .formControl {
+      margin-bottom: 25px;
+    }
   }
 
   .recipeYield {
     flex: 1;
-    padding: 50px;
+    padding: 50px 30px 100px;
   }
 }
 

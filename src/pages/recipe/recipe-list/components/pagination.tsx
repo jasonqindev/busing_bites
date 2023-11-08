@@ -1,22 +1,27 @@
 import { Pagination as Pages } from "@mantine/core";
 import { recipes_pageSize } from "const";
-import { useUrlQueryParam } from "utils";
-import { PageToOffset, offsetToPage } from "../utils";
+import { FC } from "react";
+import styles from "./components.module.scss";
 
-const Pagination = ({ totalResults }: { totalResults: number }) => {
-  const [{ offset }, setSearchParams] = useUrlQueryParam(["offset"]);
+interface PropsType {
+  totalResults: number;
+  page: number;
+  pageChange: (page: number) => void;
+}
+
+const Pagination: FC<PropsType> = ({ totalResults, page, pageChange }) => {
   const totalPage = Math.ceil(totalResults / recipes_pageSize);
 
   const handlePage = (page: number) => {
-    setSearchParams({
-      offset: PageToOffset(page),
-    });
+    pageChange(page);
   };
 
   return (
     <Pages
+      className={styles.pagination}
+      withEdges
       total={totalPage}
-      value={offset ? offsetToPage(parseInt(offset)) : 1}
+      value={page}
       onChange={handlePage}
     />
   );

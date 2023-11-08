@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import styles from "./recipeDetail.module.scss";
 import { useLoadRecipeInfo } from "hooks/useLoadRecipe";
-import { Text, Title } from "@mantine/core";
+import { LoadingOverlay, Text, Title } from "@mantine/core";
 
 import RecipeBrief from "./components/recipeBrief";
 import Ingredients from "./components/ingredients";
@@ -12,7 +12,12 @@ const RecipeDetail = () => {
   const { recipeData, loading } = useLoadRecipeInfo(id);
 
   return (
-    <div>
+    <div className={styles.page}>
+      <LoadingOverlay
+        visible={loading}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+      />
       {!loading && (
         <div className={styles.recipeContainer}>
           <main className={styles.recipeYield}>
