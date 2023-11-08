@@ -1,5 +1,5 @@
 import styles from "./components.module.scss";
-import DropBox from "components/dropBox";
+import DropBox from "components/dnd/dropBox";
 import { Title } from "@mantine/core";
 import { FC } from "react";
 import { RecipeCardProps } from "types/recipeAjax";

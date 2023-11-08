@@ -5,6 +5,7 @@ import Pagination from "./components/pagination";
 import styles from "./recipeList.module.scss";
 import { getFormComponents } from "components/formComponents";
 import { useEffect, useRef, useState } from "react";
+import { recipes_pageSize } from "const";
 
 const formCompLayout = [
   "recipe",
@@ -18,13 +19,14 @@ const formCompLayout = [
 ];
 
 const RecipeList = () => {
+  const pageSize = 30 || recipes_pageSize;
   const [page, setPage] = useState(1);
   const viewport = useRef<HTMLDivElement>(null);
   const {
     results: recipeList,
     totalResults,
     loading,
-  } = useLoadRecipeData({ page, addRecipeInformation: true });
+  } = useLoadRecipeData({ page, addRecipeInformation: true, pageSize });
 
   const pageChange = (page: number) => {
     setPage(page);
@@ -58,6 +60,7 @@ const RecipeList = () => {
         </div>
         {totalResults > 20 && (
           <Pagination
+            pageSize={pageSize}
             totalResults={totalResults}
             page={page}
             pageChange={pageChange}

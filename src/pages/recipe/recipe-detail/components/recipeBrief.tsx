@@ -29,7 +29,6 @@ const RecipeBrief = ({
   image,
   ...props
 }: RecipeProps) => {
-  const {} = props;
   return (
     <div className={styles.briefInfo}>
       <div className={styles.left}>

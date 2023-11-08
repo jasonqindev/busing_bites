@@ -1,4 +1,5 @@
 import { useRequest } from "ahooks";
+import { recipes_pageSize } from "const";
 import { PageToOffset } from "pages/recipe/recipe-list/utils";
 import { useLocation } from "react-router-dom";
 import {
@@ -14,21 +15,21 @@ import {
 
 export interface LoadRecipeDataType {
   page?: number;
-  number?: number;
+  pageSize?: number;
   addRecipeInformation?: boolean;
 }
 
 export const useLoadRecipeData = ({
   page,
-  number,
+  pageSize = recipes_pageSize,
   addRecipeInformation,
 }: LoadRecipeDataType) => {
   const { search } = useLocation();
-  const offset = PageToOffset(page);
+  const offset = PageToOffset(page, pageSize);
   const pack = async () => {
     return await loadComplexSearchService({
       offset,
-      number,
+      number: pageSize,
       addRecipeInformation,
     });
   };

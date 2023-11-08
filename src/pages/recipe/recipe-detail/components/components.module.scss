@@ -2,11 +2,11 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: center;
   margin-bottom: 30px;
 
   .left {
-    margin-right: 50px;
+    margin-right: 30px;
     .recipeName {
       margin: 0 0 5px;
       padding-top: 20px;

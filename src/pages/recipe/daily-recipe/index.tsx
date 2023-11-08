@@ -1,7 +1,7 @@
-import DndContent from "components/dndContent";
+import DndContent from "components/dnd/dndContent";
 import styles from "./dailyRecipe.module.scss";
 import { useEffect, useState } from "react";
-import DragOverComp from "components/dragOverComp";
+import DragOverComp from "components/dnd/dragOverComp";
 import { useLoadRecipeData } from "hooks/useLoadRecipe";
 import RecipeSearch from "./components/recipeSearch";
 import DailyMeatAnalyst from "./components/dailyMeatAnalyst";
@@ -13,7 +13,7 @@ const DailyRecipe = () => {
   const [page, setPage] = useState(1);
   const { results, totalResults, loading } = useLoadRecipeData({
     page,
-    number: 50,
+    pageSize: 50,
   });
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([]);
   const [activeItem, setActiveItem] = useState<RecipeCardProps | null>(null);

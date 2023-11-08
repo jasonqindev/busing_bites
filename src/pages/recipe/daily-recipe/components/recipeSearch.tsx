@@ -1,5 +1,5 @@
 import styles from "./components.module.scss";
-import DragBox from "components/dragBox";
+import DragBox from "components/dnd/dragBox";
 import RecipeInput from "components/formComponents/recipeInput";
 import { FC } from "react";
 import { RecipeCardProps } from "types/recipeAjax";
