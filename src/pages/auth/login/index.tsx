@@ -1,23 +1,23 @@
 import { FC, useContext, useEffect, useState } from 'react';
 
-import { AuthContext } from 'services/auth';
 import { redirect } from 'react-router-dom'
 import { Button, Divider, Group, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
 import SocialButton from './components/socialbutton';
 import { BsApple, BsDiscord, BsGoogle, BsMicrosoft, BsTwitter } from 'react-icons/bs';
 
 import styles from './login.module.scss';
+import { AuthContext } from 'context/auth-context';
 
 const Login: FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { token, setToken } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        if (token) {
+        if (currentUser === null) {
             redirect('/');
         }
-    }, [token]);
+    }, [currentUser]);
 
     const handleLogin = async () => {
         // TODO: backend
