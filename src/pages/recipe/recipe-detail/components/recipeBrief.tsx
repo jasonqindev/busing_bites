@@ -81,16 +81,20 @@ const RecipeBrief = ({
             <div key={item} className={styles.judgeItem}>
               <span>{item}</span>
               {props[item as DietOption] ? (
-                <img src="/correct.png" alt="correct" />
+                <img src="/images/correct.png" alt="correct" />
               ) : (
-                <img src="/remove.png" alt="error" />
+                <img src="/images/remove.png" alt="error" />
               )}
             </div>
           ))}
         </div>
       </div>
       <div className={styles.right}>
-        <Image src={image} alt="recipe" fallbackSrc="/img_default.jepg" />
+        <Image
+          src={image}
+          alt="recipe"
+          fallbackSrc="/images/img_default.jpeg"
+        />
       </div>
     </div>
   );

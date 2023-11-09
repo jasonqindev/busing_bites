@@ -1,5 +1,12 @@
 import { FC } from "react";
-import { DndContext, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  DragStartEvent,
+  MouseSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 interface PropsType {
   children: JSX.Element | JSX.Element[];
@@ -14,6 +21,14 @@ const DndContent: FC<PropsType> = ({
   onDragEnd,
   onDragStart,
 }) => {
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    })
+  );
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
@@ -31,7 +46,11 @@ const DndContent: FC<PropsType> = ({
   }
 
   return (
-    <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+    <DndContext
+      sensors={sensors}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+    >
       {children}
     </DndContext>
   );

@@ -1,32 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AnalystProps } from "types/recipeAjax";
 
 export interface AnalystsStateType {
-  analysts: AnalystProps[];
+  selectedId: string;
+  dailyMeatIds: number[];
 }
 
 const INIT_STATE: AnalystsStateType = {
-  analysts: [],
+  dailyMeatIds: [],
+  selectedId: "",
 };
 
 const analystSlice = createSlice({
   name: "analyst",
   initialState: INIT_STATE,
   reducers: {
-    addItemToAnalysts(
-      state: AnalystsStateType,
-      action: PayloadAction<AnalystProps>
-    ) {
-      const { analysts } = state;
-      const newList = [...analysts, action.payload];
+    changeSelectedId(state: AnalystsStateType, action: PayloadAction<string>) {
+      return {
+        ...state,
+        selectedId: action.payload,
+      };
+    },
+    updateMeatIds(state: AnalystsStateType, action: PayloadAction<number[]>) {
+      const newList = action.payload;
 
       return {
-        analysts: newList,
+        ...state,
+        dailyMeatIds: newList,
       };
     },
   },
 });
 
-export const { addItemToAnalysts } = analystSlice.actions;
+export const { updateMeatIds, changeSelectedId } = analystSlice.actions;
 
 export default analystSlice.reducer;

@@ -1,5 +1,4 @@
 import { cuisines } from "utils/recipeData";
-import styles from "./cuisinesSelect.module.scss";
 import { Select } from "@mantine/core";
 import { useUrlQueryParam } from "utils";
 

@@ -5,7 +5,7 @@ export const recipes_pageSize = 20;
 export const autoCompleteSize = 15;
 
 export const judgeItem = [
-  "vegetarian,",
+  "vegetarian",
   "vegan",
   "glutenFree",
   "dairyFree",

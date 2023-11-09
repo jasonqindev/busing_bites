@@ -5,7 +5,7 @@ import RecipeList from "pages/recipe/recipe-list";
 import RecipeDetail from "pages/recipe/recipe-detail";
 import NotFound from "pages/exceptionPage/NotFound";
 import RecipeLayout from "pages/layout/recipeLayout";
-import DailyRecipe from "pages/recipe/daily-recipe";
+import DailyRecipe from "pages/recipe/recipe-analyst";
 
 export const HOME = "/";
 
@@ -27,7 +27,7 @@ const routerConfig = createBrowserRouter([
         element: <RecipeDetail />,
       },
       {
-        path: "daily",
+        path: "analyst",
         element: <DailyRecipe />,
       },
     ],

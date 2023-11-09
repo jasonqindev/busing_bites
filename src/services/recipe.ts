@@ -1,11 +1,13 @@
 import { autoCompleteSize } from "const";
 import axios from "./ajax";
 import {
+  AnalystProps,
   AutoCompleteItemProps,
   RecipeProps,
   RecipeResultsProps,
 } from "types/recipeAjax";
 import queryString from "query-string";
+import { disconnect } from "process";
 
 export interface ComplexSearchPropsType {
   offset?: number;
@@ -45,5 +47,21 @@ export const loadRecipeInformation = async (id: string) => {
   );
 
   const data = (await axios.get(url)) as RecipeProps;
+  return data;
+};
+
+export const loadBulkRecipeInformation = async (ids: string) => {
+  const url = "/recipes/informationBulk"
+    .appendQueryParam("ids", ids)
+    .appendQueryParam("includeNutrition", "true");
+
+  const data = (await axios.get(url)) as RecipeProps;
+  return data;
+};
+
+export const loadNutritionInformation = async (id: string) => {
+  const url = `/recipes/${id}/nutritionWidget.json`;
+
+  const data = (await axios.get(url)) as AnalystProps;
   return data;
 };
