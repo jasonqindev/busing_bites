@@ -8,6 +8,8 @@ import { Box, LoadingOverlay, ScrollArea } from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { changeSelectedId } from "store/reducer/analyst";
 import { useLoadRecipeData } from "hooks/useLoadRecipe";
+import throttle from "lodash.throttle";
+import { useLocation } from "react-router-dom";
 
 interface PropsType {
   recipes: RecipeCardProps[];
@@ -15,6 +17,7 @@ interface PropsType {
 }
 
 const RecipeSearch: FC<PropsType> = ({ recipes, setRecipes }) => {
+  const { search } = useLocation();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const scrollDom = useRef<HTMLDivElement>(null);
@@ -28,26 +31,34 @@ const RecipeSearch: FC<PropsType> = ({ recipes, setRecipes }) => {
   });
 
   useEffect(() => {
+    setRecipes([]);
+  }, [search]); // eslint-disable-line
+
+  useEffect(() => {
     setRecipes([...recipes, ...results]);
+
+    return () => {
+      setRecipes([]);
+    };
   }, [results]); // eslint-disable-line
 
   const handleClick = (id: number) => {
     dispatch(changeSelectedId(String(id)));
   };
 
-  const onScrollPositionChange = ({ y }: { y: number }) => {
+  const onScrollPositionChange = throttle(({ y }: { y: number }) => {
     if (totalResults === recipes.length) return;
     if (scrollDom.current && scrollDom.current.children[0]) {
       if (
         y + scrollDom.current.clientHeight >=
-        scrollDom.current.scrollHeight - 100
+        scrollDom.current.scrollHeight - 500
       ) {
         if (Math.ceil(totalResults / 50) > page) {
           setPage(page + 1);
         }
       }
     }
-  };
+  }, 1000);
 
   return (
     <div className={styles.searchField}>

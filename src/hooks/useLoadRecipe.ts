@@ -2,6 +2,7 @@ import { useRequest } from "ahooks";
 import { recipes_pageSize } from "const";
 import cloneDeep from "lodash.clonedeep";
 import { PageToOffset } from "pages/recipe/recipe-list/utils";
+import { off } from "process";
 import { useLocation } from "react-router-dom";
 import {
   loadAutocompleteService,
@@ -30,7 +31,9 @@ export const useLoadRecipeData = ({
   addRecipeInformation,
 }: LoadRecipeDataType) => {
   const { search } = useLocation();
+
   const offset = PageToOffset(page, pageSize);
+
   const pack = async () => {
     return await loadComplexSearchService({
       offset,
