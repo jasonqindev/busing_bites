@@ -1,4 +1,7 @@
+export const HOME_PAGE = "/home";
 export const RECIPES_PAGE = "/recipes";
+export const RECIPES_ANALYST_PAGE = "/recipes/analyst";
+export const RECIPES_CREATE_PAGE = "/recipes/create";
 
 export const recipes_pageSize = 20;
 
