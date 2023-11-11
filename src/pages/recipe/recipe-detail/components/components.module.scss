@@ -3,6 +3,7 @@
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
+  padding-top: 30px;
   margin-bottom: 30px;
 
   .left {
@@ -86,6 +87,9 @@
     flex: 0 0 556px;
     width: 556px;
     height: 370px;
+    img {
+      border-radius: 20px;
+    }
   }
 }
 

@@ -7,7 +7,6 @@ import {
   RecipeResultsProps,
 } from "types/recipeAjax";
 import queryString from "query-string";
-import { disconnect } from "process";
 
 export interface ComplexSearchPropsType {
   offset?: number;
@@ -41,10 +40,7 @@ export const loadAutocompleteService = async (query: string) => {
 };
 
 export const loadRecipeInformation = async (id: string) => {
-  const url = `/recipes/${id}/information`.appendQueryParam(
-    "includeNutrition",
-    "true"
-  );
+  const url = `/recipes/${id}/information`;
 
   const data = (await axios.get(url)) as RecipeProps;
   return data;

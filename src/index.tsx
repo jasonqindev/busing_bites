@@ -5,6 +5,7 @@ import "@mantine/core/styles.css";
 import App from "./App";
 import store from "store";
 import { Provider } from "react-redux";
+import "@mantine/dropzone/styles.css";
 import "./echarts";
 
 const root = ReactDOM.createRoot(

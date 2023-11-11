@@ -1,6 +1,11 @@
 import { Image, Avatar, Box, Group, Divider, Menu, Text } from "@mantine/core";
 import styles from "./header.module.scss";
-import { RECIPES_ANALYST_PAGE, RECIPES_CREATE_PAGE, RECIPES_PAGE } from "const";
+import {
+  ABOUT_US_PAGE,
+  RECIPES_ANALYST_PAGE,
+  RECIPES_CREATE_PAGE,
+  RECIPES_PAGE,
+} from "const";
 import { Link, useLocation } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -9,6 +14,7 @@ const navBar = [
   { title: "Recipe list", href: RECIPES_PAGE },
   { title: "Recipe Analyst", href: RECIPES_ANALYST_PAGE },
   { title: "Recipe Create", href: RECIPES_CREATE_PAGE },
+  { title: "About Us", href: ABOUT_US_PAGE },
 ];
 
 const Header = () => {
