@@ -73,10 +73,9 @@
     }
   }
 
-  .selectInLine {
-    @include flex-start();
+  .SelectBox {
     input {
-      width: 200px;
+      font-size: 14px;
       padding: 0px;
     }
   }

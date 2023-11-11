@@ -12,6 +12,7 @@ import {
   Button,
   Paper,
   ActionIcon,
+  Group,
 } from "@mantine/core";
 import styles from "./recipeCreate.module.scss";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -37,7 +38,10 @@ const RecipeCreate = () => {
     },
 
     validate: {
-      title: isNotEmpty("Input your recipe name"),
+      title: isNotEmpty("recipe name can not be empty"),
+      diets: isNotEmpty("diets can not be empty"),
+      dishTypes: isNotEmpty("dish type can not be empty"),
+      ingredients: isNotEmpty("ingredients can not be empty"),
     },
   });
 
@@ -102,22 +106,26 @@ const RecipeCreate = () => {
               {...form.getInputProps("readyInMinutes")}
             />
           </Box>
-          <Box className={[styles.formItem, styles.selectInLine].join(" ")}>
-            <MultiSelect
-              label="diet"
-              placeholder="select food's diets"
-              data={diets}
-              mr={30}
-              {...form.getInputProps("diets")}
-            />
-            <MultiSelect
-              label="cuisine"
-              placeholder="select cuisine"
-              data={foodType}
-              mr={30}
-              {...form.getInputProps("dishTypes")}
-            />
-          </Box>
+          <Group grow mb={20} align="start" className={styles.SelectBox}>
+            <Box>
+              <MultiSelect
+                label="diet"
+                placeholder="select food's diets"
+                data={diets}
+                mr={30}
+                {...form.getInputProps("diets")}
+              />
+            </Box>
+            <Box>
+              <MultiSelect
+                label="cuisine"
+                placeholder="select cuisine"
+                data={foodType}
+                mr={30}
+                {...form.getInputProps("dishTypes")}
+              />
+            </Box>
+          </Group>
           <Box className={styles.formItem}>
             <TagsInput
               label="include ingredients"
