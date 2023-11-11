@@ -42,6 +42,9 @@ const RecipeCreate = () => {
       diets: isNotEmpty("diets can not be empty"),
       dishTypes: isNotEmpty("dish type can not be empty"),
       ingredients: isNotEmpty("ingredients can not be empty"),
+      steps: {
+        step: isNotEmpty("step can not be empty"),
+      },
     },
   });
 
