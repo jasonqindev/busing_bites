@@ -89,7 +89,7 @@ const NutritionAnalyst: FC = () => {
         </Center>
         <Blockquote
           color={nutrientColor(score.amount)}
-          cite="– Team 18"
+          cite="– Tips"
           icon={<MdTipsAndUpdates />}
           mt="xl"
         >

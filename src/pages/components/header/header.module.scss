@@ -1,4 +1,6 @@
 .header {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -8,11 +10,13 @@
   padding: 20px 100px 20px 50px;
   border-bottom: 1px solid #dee2e6;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  z-index: 999;
 
   .logo {
     width: 100px;
     height: 50px;
-    background-color: red;
+    background-color: aqua;
   }
 
   .navbar {

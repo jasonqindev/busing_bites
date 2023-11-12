@@ -70,9 +70,9 @@ const RecipeBrief = ({
               <span>diet:</span>
             </div>
             <span className={styles.dietTxt}>
-              {diets.map((diet: any) => {
-                return diet + "   ";
-              })}
+              {diets.map((diet: any, index) =>
+                diets.length > index + 1 ? diet + ", " : diet
+              )}
             </span>
           </div>
         </div>

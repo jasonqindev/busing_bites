@@ -25,6 +25,7 @@ const Header = () => {
       <Group>
         <Box className={styles.logo} mr={100}>
           <Image src="" />
+          logo
         </Box>
 
         <Box className={styles.navbar}>
