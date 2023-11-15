@@ -30,20 +30,10 @@ export const registerUser = async (
     email: string,
     password: string
 ) => {
-    try {
-        await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
-            console.log(err)
-        );
-        if (!auth.currentUser) return;
-        await sendEmailVerification(auth.currentUser).catch((err) =>
-            console.log(err)
-        );
-        await updateProfile(auth.currentUser, { displayName: name }).catch(
-            (err) => console.log(err)
-        );
-    } catch (err) {
-        console.log(err);
-    }
+    await createUserWithEmailAndPassword(auth, email, password);
+    if (!auth.currentUser) return;
+    await sendEmailVerification(auth.currentUser)
+    await updateProfile(auth.currentUser, { displayName: name })
 };
 
 export const updateProfilePicture = async (photoURL: string) => {

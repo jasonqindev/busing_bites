@@ -2,7 +2,7 @@ import { } from 'firebase/auth';
 
 import { Anchor, Button, Checkbox, Group, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
 import { FC, useContext, useState } from 'react';
-import { signInUser, signOutUser, userStateListener } from '../../../firebase/firebase';
+import { registerUser, signInUser, signOutUser, userStateListener } from '../../../firebase/firebase';
 
 import { AuthContext } from 'context/auth-context';
 import styles from './register.module.scss';
@@ -34,8 +34,8 @@ const Login: FC = () => {
 
     userStateListener((user) => {
         if (user) {
-            // setCurrentUser(user)
-            // navigate('/')
+            setCurrentUser(user)
+            navigate('/')
         }
     });
 
@@ -45,7 +45,20 @@ const Login: FC = () => {
 
         setLoading(true);
 
-        
+        try {
+            await registerUser(
+                form.values.username,
+                form.values.email,
+                form.values.password
+            );
+
+            navigate('/auth/verify')
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+        setLoading(false);
     };
 
     return (

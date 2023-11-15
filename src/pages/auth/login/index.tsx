@@ -20,10 +20,8 @@ const Login: FC = () => {
 
     userStateListener((user) => {
         if (user) {
-            // for now
-            signOutUser()
-            // setCurrentUser(user)
-            // navigate('/')
+            setCurrentUser(user)
+            navigate('/')
         }
     });
 
