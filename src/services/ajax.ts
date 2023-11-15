@@ -16,7 +16,6 @@ export type ResponseDataType = {
 
 const instance = axios.create({
   baseURL: apiUrl,
-  timeout: 10 * 1000,
 });
 
 instance.interceptors.request.use(

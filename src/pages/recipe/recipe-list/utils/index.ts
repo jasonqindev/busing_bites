@@ -10,10 +10,16 @@ export const cookingDifficulty = (time: number) => {
   }
 };
 
-export const offsetToPage = (offset: number) => {
-  return Math.ceil(offset / recipes_pageSize) + 1 || 1;
+export const offsetToPage = (
+  offset: number = 20,
+  pageSize: number = recipes_pageSize
+) => {
+  return Math.ceil(offset / pageSize) + 1 || 1;
 };
 
-export const PageToOffset = (page: number) => {
-  return Math.ceil((page - 1) * recipes_pageSize) || 0;
+export const PageToOffset = (
+  page: number = 1,
+  pageSize: number = recipes_pageSize
+) => {
+  return Math.ceil((page - 1) * pageSize) || 0;
 };

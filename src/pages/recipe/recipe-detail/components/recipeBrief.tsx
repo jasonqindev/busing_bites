@@ -29,7 +29,6 @@ const RecipeBrief = ({
   image,
   ...props
 }: RecipeProps) => {
-  const {} = props;
   return (
     <div className={styles.briefInfo}>
       <div className={styles.left}>
@@ -71,9 +70,9 @@ const RecipeBrief = ({
               <span>diet:</span>
             </div>
             <span className={styles.dietTxt}>
-              {diets.map((diet: any) => {
-                return diet + "   ";
-              })}
+              {diets.map((diet: any, index) =>
+                diets.length > index + 1 ? diet + ", " : diet
+              )}
             </span>
           </div>
         </div>
@@ -82,16 +81,20 @@ const RecipeBrief = ({
             <div key={item} className={styles.judgeItem}>
               <span>{item}</span>
               {props[item as DietOption] ? (
-                <img src="/correct.png" alt="correct" />
+                <img src="/images/correct.png" alt="correct" />
               ) : (
-                <img src="/remove.png" alt="error" />
+                <img src="/images/remove.png" alt="error" />
               )}
             </div>
           ))}
         </div>
       </div>
       <div className={styles.right}>
-        <Image src={image} alt="recipe" fallbackSrc="/img_default.jepg" />
+        <Image
+          src={image}
+          alt="recipe"
+          fallbackSrc="/images/img_default.jpeg"
+        />
       </div>
     </div>
   );

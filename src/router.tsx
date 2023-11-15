@@ -1,8 +1,11 @@
+import AboutUs from "pages/aboutUs";
 import AuthLayout from "pages/auth/layout";
+import DailyRecipe from "pages/recipe/recipe-analyst";
 import Home from "./pages/home";
 import Login from "pages/auth/login";
 import Logout from "pages/auth/logout";
 import NotFound from "pages/exceptionPage/NotFound";
+import RecipeCreate from "pages/recipe/recipe-create";
 import RecipeDetail from "pages/recipe/recipe-detail";
 import RecipeLayout from "pages/layout/recipeLayout";
 import RecipeList from "pages/recipe/recipe-list";
@@ -28,6 +31,24 @@ const routerConfig = createBrowserRouter([
       {
         path: ":id",
         element: <RecipeDetail />,
+      },
+      {
+        path: "analyst",
+        element: <DailyRecipe />,
+      },
+      {
+        path: "create",
+        element: <RecipeCreate />,
+      },
+    ],
+  },
+  {
+    path: "/aboutUs",
+    element: <RecipeLayout />,
+    children: [
+      {
+        path: "",
+        element: <AboutUs />,
       },
     ],
   },

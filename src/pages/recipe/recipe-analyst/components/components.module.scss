@@ -1,0 +1,13 @@
+.recipeItem {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px 20px;
+  .img {
+    width: 60px;
+    height: 60px;
+    background: gray;
+    border-radius: 10px;
+  }
+}

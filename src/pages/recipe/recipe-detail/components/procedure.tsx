@@ -35,7 +35,7 @@ const Procedure = ({ analyzedInstructions = [] }: RecipeProps) => {
                       <Text size="sm" mr={1} component="span" fw={500}>
                         Ingredients:
                       </Text>
-                      <Flex gap="md">
+                      <Flex gap="md" wrap="wrap">
                         {ingredients.map((item: any) => {
                           return (
                             <Tooltip

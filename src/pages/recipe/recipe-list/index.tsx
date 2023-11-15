@@ -5,6 +5,8 @@ import Pagination from "./components/pagination";
 import styles from "./recipeList.module.scss";
 import { getFormComponents } from "components/formComponents";
 import { useEffect, useRef, useState } from "react";
+import { recipes_pageSize } from "const";
+import PlaceholderComp from "components/placeholderComp";
 
 const formCompLayout = [
   "recipe",
@@ -18,13 +20,14 @@ const formCompLayout = [
 ];
 
 const RecipeList = () => {
+  const pageSize = 30 || recipes_pageSize;
   const [page, setPage] = useState(1);
   const viewport = useRef<HTMLDivElement>(null);
   const {
-    results: recipeList,
+    results: recipeList = [],
     totalResults,
     loading,
-  } = useLoadRecipeData(page);
+  } = useLoadRecipeData({ page, addRecipeInformation: true, pageSize });
 
   const pageChange = (page: number) => {
     setPage(page);
@@ -47,21 +50,21 @@ const RecipeList = () => {
         h={window.innerHeight - 63}
         className={styles.recipeYield}
         viewportRef={viewport}
+        style={{ position: "relative" }}
       >
-        <LoadingOverlay
-          visible={loading}
-          zIndex={1000}
-          overlayProps={{ radius: "sm", blur: 2 }}
-        />
+        {loading && <LoadingOverlay visible={loading} zIndex={1000} />}
+        {!recipeList.length && !loading && (
+          <PlaceholderComp img="/images/no_data.jpg" title="Result not found" />
+        )}
         <div className={styles.recipeGroup}>
-          {recipeList &&
-            !!recipeList.length &&
+          {!!recipeList.length &&
             recipeList.map((recipe) => {
               return <RecipeCard key={recipe.id} {...recipe} />;
             })}
         </div>
         {totalResults > 20 && (
           <Pagination
+            pageSize={pageSize}
             totalResults={totalResults}
             page={page}
             pageChange={pageChange}

@@ -15,9 +15,9 @@ const Ingredients = ({ extendedIngredients = [] }: any) => {
         icon={<BiDish />}
         mt="xl"
       >
-        {extendedIngredients.map((ingredient: any) => {
+        {extendedIngredients.map((ingredient: any, index: number) => {
           return (
-            <div key={ingredient.id} className={styles.eachIngredient}>
+            <div key={index} className={styles.eachIngredient}>
               <span></span>
               <div>{ingredient.original}</div>
             </div>

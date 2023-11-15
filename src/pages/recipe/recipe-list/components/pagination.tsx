@@ -6,11 +6,17 @@ import styles from "./components.module.scss";
 interface PropsType {
   totalResults: number;
   page: number;
+  pageSize: number;
   pageChange: (page: number) => void;
 }
 
-const Pagination: FC<PropsType> = ({ totalResults, page, pageChange }) => {
-  const totalPage = Math.ceil(totalResults / recipes_pageSize);
+const Pagination: FC<PropsType> = ({
+  totalResults,
+  page,
+  pageChange,
+  pageSize = recipes_pageSize,
+}) => {
+  const totalPage = Math.ceil(totalResults / pageSize);
 
   const handlePage = (page: number) => {
     pageChange(page);

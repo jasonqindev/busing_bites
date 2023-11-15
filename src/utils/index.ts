@@ -72,3 +72,26 @@ String.prototype.appendQueryParam = function (key: string, value: string) {
   const param = `${key}=${value}`;
   return `${url}${separator}${param}`;
 };
+
+export const deepMerge = (obj1: any, obj2: any) => {
+  for (const key in obj2) {
+    if (obj2.hasOwnProperty(key)) {
+      if (
+        obj1.hasOwnProperty(key) &&
+        typeof obj1[key] === "object" &&
+        typeof obj2[key] === "object"
+      ) {
+        obj1[key] = deepMerge(obj1[key], obj2[key]);
+      } else if (!obj1.hasOwnProperty(key)) {
+        obj1[key] = obj2[key];
+      } else if (
+        obj1.hasOwnProperty(key) &&
+        typeof obj1[key] === "number" &&
+        typeof obj2[key] === "number"
+      ) {
+        obj1[key] += obj2[key];
+      }
+    }
+  }
+  return obj1;
+};

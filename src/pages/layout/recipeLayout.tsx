@@ -4,7 +4,7 @@ import styles from "./layout.module.scss";
 
 const RecipeLayout = () => {
   return (
-    <div className={styles.recipeMain}>
+    <div className={styles.page}>
       <Header />
       <Outlet />
     </div>

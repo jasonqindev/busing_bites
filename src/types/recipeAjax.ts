@@ -41,4 +41,28 @@ export interface RecipeProps {
   sustainable: string;
   lowFodmap: string;
   extendedIngredients: any[];
+  nutrition?: AnalystProps;
+}
+
+export interface Nutrient {
+  name: string;
+  amount: number;
+  unit: string;
+  percentOfDailyNeeds: number;
+}
+
+export interface CaloricBreakdownType {
+  percentCarbs: number;
+  percentFat: number;
+  percentProtein: number;
+}
+
+export interface AnalystProps {
+  nutrients: Nutrient[];
+  caloricBreakdown: CaloricBreakdownType;
+  properties: {
+    name: string;
+    amount: number;
+    unit: string;
+  }[];
 }
