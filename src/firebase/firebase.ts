@@ -1,15 +1,13 @@
 import {
     NextOrObserver,
     User,
+    createUserWithEmailAndPassword,
     getAuth,
     onAuthStateChanged,
-    signInWithEmailAndPassword,
-    NextOrObserver,
-    User,
-    createUserWithEmailAndPassword,
-    updateProfile,
     sendEmailVerification,
-    signOut
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
 } from 'firebase/auth';
 
 import { getFirebaseConfig } from './firebaseSetup';
