@@ -1,16 +1,17 @@
-import { initializeApp } from "firebase/app";
 import {
-    getAuth,
-    onAuthStateChanged,
-    signOut,
-    signInWithEmailAndPassword,
     NextOrObserver,
     User,
     createUserWithEmailAndPassword,
-    updateProfile,
-    sendEmailVerification
+    getAuth,
+    onAuthStateChanged,
+    sendEmailVerification,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
 } from 'firebase/auth';
+
 import { getFirebaseConfig } from './firebaseSetup';
+import { initializeApp } from "firebase/app";
 
 const app = initializeApp(getFirebaseConfig());
 const auth = getAuth(app);
@@ -29,20 +30,10 @@ export const registerUser = async (
     email: string,
     password: string
 ) => {
-    try {
-        await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
-            console.log(err)
-        );
-        if (!auth.currentUser) return;
-        await sendEmailVerification(auth.currentUser).catch((err) =>
-            console.log(err)
-        );
-        await updateProfile(auth.currentUser, { displayName: name }).catch(
-            (err) => console.log(err)
-        );
-    } catch (err) {
-        console.log(err);
-    }
+    await createUserWithEmailAndPassword(auth, email, password);
+    if (!auth.currentUser) return;
+    await sendEmailVerification(auth.currentUser)
+    await updateProfile(auth.currentUser, { displayName: name })
 };
 
 export const updateProfilePicture = async (photoURL: string) => {
@@ -63,4 +54,4 @@ export const userStateListener = (callback: NextOrObserver<User>) => {
     return onAuthStateChanged(auth, callback)
 }
 
-export const SignOutUser = async () => await signOut(auth);
+export const signOutUser = async () => await signOut(auth);

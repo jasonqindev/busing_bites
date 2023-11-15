@@ -1,4 +1,4 @@
-import { RecipeProps } from "types/recipe";
+import { RecipeProps } from "types/recipeAjax";
 import styles from "./components.module.scss";
 import {
   Timeline,
@@ -35,7 +35,7 @@ const Procedure = ({ analyzedInstructions = [] }: RecipeProps) => {
                       <Text size="sm" mr={1} component="span" fw={500}>
                         Ingredients:
                       </Text>
-                      <Flex gap="md">
+                      <Flex gap="md" wrap="wrap">
                         {ingredients.map((item: any) => {
                           return (
                             <Tooltip

@@ -1,6 +1,6 @@
 import { Card, Image, Text, Badge, Group } from "@mantine/core";
 import styles from "./components.module.scss";
-import { RecipeCardProps } from "types/recipe";
+import { RecipeCardProps } from "types/recipeAjax";
 import { badgeColors } from "utils";
 import { IoMdTime } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";

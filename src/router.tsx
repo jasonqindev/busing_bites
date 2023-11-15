@@ -1,10 +1,17 @@
-import { createBrowserRouter } from "react-router-dom";
-
+import AboutUs from "pages/aboutUs";
+import AuthLayout from "pages/auth/layout";
+import DailyRecipe from "pages/recipe/recipe-analyst";
 import Home from "./pages/home";
-import RecipeList from "pages/recipe/recipe-list";
-import RecipeDetail from "pages/recipe/recipe-detail";
+import Login from "pages/auth/login";
+import Logout from "pages/auth/logout";
 import NotFound from "pages/exceptionPage/NotFound";
+import RecipeCreate from "pages/recipe/recipe-create";
+import RecipeDetail from "pages/recipe/recipe-detail";
 import RecipeLayout from "pages/layout/recipeLayout";
+import RecipeList from "pages/recipe/recipe-list";
+import Register from "pages/auth/register";
+import Verify from "pages/auth/verify";
+import { createBrowserRouter } from "react-router-dom";
 
 export const HOME = "/";
 
@@ -25,6 +32,46 @@ const routerConfig = createBrowserRouter([
         path: ":id",
         element: <RecipeDetail />,
       },
+      {
+        path: "analyst",
+        element: <DailyRecipe />,
+      },
+      {
+        path: "create",
+        element: <RecipeCreate />,
+      },
+    ],
+  },
+  {
+    path: "/aboutUs",
+    element: <RecipeLayout />,
+    children: [
+      {
+        path: "",
+        element: <AboutUs />,
+      },
+    ],
+  },
+  {
+    path: "auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "verify",
+        element: <Verify />,
+      },
+      {
+        path: "logout",
+        element: <Logout/>
+      }
     ],
   },
   {

@@ -2,11 +2,12 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: center;
+  padding-top: 30px;
   margin-bottom: 30px;
 
   .left {
-    margin-right: 50px;
+    margin-right: 30px;
     .recipeName {
       margin: 0 0 5px;
       padding-top: 20px;
@@ -86,6 +87,9 @@
     flex: 0 0 556px;
     width: 556px;
     height: 370px;
+    img {
+      border-radius: 20px;
+    }
   }
 }
 
