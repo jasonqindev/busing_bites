@@ -12,6 +12,7 @@ import RecipeList from "pages/recipe/recipe-list";
 import Register from "pages/auth/register";
 import Verify from "pages/auth/verify";
 import { createBrowserRouter } from "react-router-dom";
+import Profile from "pages/profile";
 
 export const HOME = "/";
 
@@ -43,6 +44,16 @@ const routerConfig = createBrowserRouter([
     ],
   },
   {
+    path: "",
+    element: <RecipeLayout />,
+    children: [
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
     path: "/aboutUs",
     element: <RecipeLayout />,
     children: [
@@ -70,8 +81,8 @@ const routerConfig = createBrowserRouter([
       },
       {
         path: "logout",
-        element: <Logout/>
-      }
+        element: <Logout />,
+      },
     ],
   },
   {

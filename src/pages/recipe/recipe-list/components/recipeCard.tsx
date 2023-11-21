@@ -7,6 +7,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { cookingDifficulty } from "../utils";
 import { useNavigate } from "react-router-dom";
+import CImage from "components/c_image";
 const RecipeCard = ({
   id,
   image,
@@ -29,7 +30,7 @@ const RecipeCard = ({
       onClick={handleShowDetail}
     >
       <Card.Section>
-        <Image className={styles.recipeImg} src={image} alt={title} />
+        <CImage className={styles.recipeImg} src={image} alt={title} />
       </Card.Section>
 
       <Text className={styles.title} fw={500} truncate="end">
