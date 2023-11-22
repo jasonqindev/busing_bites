@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }: Props) => {
                 setCurrentUser(user)
             }
         });
-
         return unsubscribe
     }, [setCurrentUser]);
 
