@@ -86,7 +86,7 @@
 .dailyMeatBox {
   height: calc(100vh - 63px - 60px);
   padding: 30px 30px 50px;
-  overflow: scroll;
+  overflow: auto;
   .recipePlan {
     margin-bottom: 20px;
   }
@@ -97,7 +97,7 @@
     margin-top: 10px;
     border: 1px solid #666;
     border-radius: 10px;
-    overflow: scroll;
+    overflow: auto;
 
     .recipeWrapper {
       position: relative;
@@ -125,7 +125,7 @@
   height: calc(100vh - 63px - 60px);
   padding: 30px 30px 50px;
   border-radius: 10px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .drawerContainer {

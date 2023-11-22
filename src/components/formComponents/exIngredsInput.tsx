@@ -14,8 +14,8 @@ const ExcludeIngredsInput = () => {
 
   return (
     <TagsInput
-      label="Specific ingredients to exclude"
-      placeholder="Exclude ingredients"
+      label="specific ingredients to exclude"
+      placeholder="exclude ingredients"
       defaultValue={
         excludeIngredients ? excludeIngredients.split(",") : undefined
       }
