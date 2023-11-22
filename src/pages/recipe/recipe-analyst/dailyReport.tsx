@@ -15,7 +15,7 @@ const DailyReport: FC<PropsType> = ({ status, onCloseModal }) => {
   const { run: getBulkRecipeInfo, nutrients } = useLoadBulkRecipeInfo();
   useEffect(() => {
     getBulkRecipeInfo(dailyMeatIds.join(","));
-  }, [dailyMeatIds]);
+  }, [dailyMeatIds]); // eslint-disable-line
 
   const close = () => {
     onCloseModal();

@@ -7,7 +7,7 @@
   align-items: center;
   width: 100vw;
   height: 63px;
-  padding: 20px 100px 20px 50px;
+  padding: 20px 50px;
   border-bottom: 1px solid #dee2e6;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   background-color: #fff;
@@ -16,6 +16,7 @@
   .logo {
     width: 50px;
     height: 40px;
+    cursor: pointer;
   }
 
   .navbar {
@@ -45,5 +46,15 @@
         }
       }
     }
+  }
+
+  &.homeHeader {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    border-radius: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 }

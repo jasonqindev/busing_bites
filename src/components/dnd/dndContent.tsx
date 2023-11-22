@@ -15,12 +15,7 @@ interface PropsType {
   onDragStart: (id: string) => void;
 }
 
-const DndContent: FC<PropsType> = ({
-  children,
-  items,
-  onDragEnd,
-  onDragStart,
-}) => {
+const DndContent: FC<PropsType> = ({ children, onDragEnd, onDragStart }) => {
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {

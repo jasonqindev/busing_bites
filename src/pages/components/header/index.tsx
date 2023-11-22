@@ -22,20 +22,28 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import styles from "./header.module.scss";
+import { useAuth } from "context/auth-context";
+import { FC } from "react";
 
 const navBar = [
+  { title: "Home", href: HOME_PAGE },
   { title: "Recipe list", href: RECIPES_PAGE },
   { title: "Recipe Analyst", href: RECIPES_ANALYST_PAGE },
   { title: "Recipe Create", href: RECIPES_CREATE_PAGE },
   { title: "About Us", href: ABOUT_US_PAGE },
 ];
 
-const Header = () => {
+interface PropsType {
+  isHome?: boolean;
+}
+
+const Header: FC<PropsType> = ({ isHome = false }) => {
   const { pathname } = useLocation();
   const nav = useNavigate();
+  const { currentUser, signOut } = useAuth();
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
       <Group>
         <Box
           className={styles.logo}
@@ -64,13 +72,6 @@ const Header = () => {
         </Box>
       </Group>
 
-      {/* <Button
-        onClick={() => {
-          nav(LOGIN_PAGE);
-        }}
-      >
-        Login
-      </Button> */}
       <Menu shadow="md" width={120} withArrow>
         <Menu.Target>
           <Avatar color="cyan" radius="xl" style={{ cursor: "pointer" }}>
@@ -88,11 +89,23 @@ const Header = () => {
             <Text ml={5}>Profile</Text>
           </Menu.Item>
           <Menu.Divider />
-          <Menu.Item color="red" leftSection={<BiLogOut size={20} />}>
+          <Menu.Item
+            color="red"
+            leftSection={<BiLogOut size={20} />}
+            onClick={signOut}
+          >
             <Text ml={5}>Logout</Text>
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+
+      {/* <Button
+          onClick={() => {
+            nav(LOGIN_PAGE);
+          }}
+        >
+          Login
+        </Button> */}
     </header>
   );
 };

@@ -4,22 +4,18 @@ import "@mantine/dropzone/styles.css";
 import "./echarts";
 
 import App from "./App";
-import { AuthProvider } from "context/auth-context";
-import { MantineProvider } from "@mantine/core";
-import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
-import store from "store";
+import { AppProviders } from "context";
+import { StrictMode } from "react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <MantineProvider>
+  <StrictMode>
+    <AppProviders>
       <App />
-    </MantineProvider>
-  </Provider>
-  // </React.StrictMode>,
+    </AppProviders>
+  </StrictMode>
 );

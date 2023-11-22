@@ -2,7 +2,6 @@ import { useRequest } from "ahooks";
 import { recipes_pageSize } from "const";
 import cloneDeep from "lodash.clonedeep";
 import { PageToOffset } from "pages/recipe/recipe-list/utils";
-import { off } from "process";
 import { useLocation } from "react-router-dom";
 import {
   loadAutocompleteService,
@@ -60,7 +59,7 @@ export const useLoadAutoComplete = (
 
   const { loading, run, error, data } = useRequest(pack, {
     manual: true,
-    debounceWait: 800,
+    debounceWait: 400,
     onSuccess: (res) => {
       onSuccess && onSuccess(res);
     },

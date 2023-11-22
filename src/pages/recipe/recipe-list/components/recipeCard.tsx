@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Group } from "@mantine/core";
+import { Card, Text, Badge, Group } from "@mantine/core";
 import styles from "./components.module.scss";
 import { RecipeCardProps } from "types/recipeAjax";
 import { badgeColors } from "utils";

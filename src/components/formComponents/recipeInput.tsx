@@ -1,10 +1,8 @@
-import { Autocomplete, AutocompleteProps } from "@mantine/core";
-import { FC, useState } from "react";
-
+import { FC, useState, useEffect } from "react";
 import { AutoCompleteItemProps } from "types/recipeAjax";
-import { useDebounceEffect } from "ahooks";
 import { useLoadAutoComplete } from "hooks/useLoadRecipe";
 import { useUrlQueryParam } from "utils";
+import { Autocomplete, AutocompleteProps } from "@mantine/core";
 
 const RecipeInput: FC<AutocompleteProps> = (props) => {
   const [{ query = "" }, setParams] = useUrlQueryParam(["query"]);
@@ -12,16 +10,12 @@ const RecipeInput: FC<AutocompleteProps> = (props) => {
 
   const { run: autoComplete } = useLoadAutoComplete(AutoCompleteListFilter);
 
-  useDebounceEffect(
-    () => {
-      if (!query) {
-        setAutoCompleteList([]);
-      }
-      query && autoComplete(query);
-    },
-    [query],
-    { wait: 200, }
-  );
+  useEffect(() => {
+    if (!query) {
+      setAutoCompleteList([]);
+    }
+    query && autoComplete(query);
+  }, [query]); // eslint-disable-line
 
   function AutoCompleteListFilter(data: AutoCompleteItemProps[]) {
     if (!query) {
