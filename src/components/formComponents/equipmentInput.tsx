@@ -1,5 +1,5 @@
-import { useUrlQueryParam } from "utils";
 import { TagsInput } from "@mantine/core";
+import { useUrlQueryParam } from "utils";
 
 const EquipmentInput = () => {
   const [{ equipment = undefined }, setParams] = useUrlQueryParam([
@@ -14,7 +14,7 @@ const EquipmentInput = () => {
 
   return (
     <TagsInput
-      label="Press Enter a equipment"
+      label="Equipment"
       placeholder="Enter equipment"
       defaultValue={equipment ? equipment.split(",") : undefined}
       clearable

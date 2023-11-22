@@ -1,15 +1,4 @@
 import {
-  Image,
-  Avatar,
-  Box,
-  Group,
-  Divider,
-  Menu,
-  Text,
-  Button,
-} from "@mantine/core";
-import styles from "./header.module.scss";
-import {
   ABOUT_US_PAGE,
   HOME_PAGE,
   LOGIN_PAGE,
@@ -18,9 +7,21 @@ import {
   RECIPES_CREATE_PAGE,
   RECIPES_PAGE,
 } from "const";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Group,
+  Image,
+  Menu,
+  Text,
+} from "@mantine/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
+import styles from "./header.module.scss";
 
 const navBar = [
   { title: "Recipe list", href: RECIPES_PAGE },

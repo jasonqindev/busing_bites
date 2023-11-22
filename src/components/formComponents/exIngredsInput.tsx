@@ -1,5 +1,5 @@
-import { useUrlQueryParam } from "utils";
 import { TagsInput } from "@mantine/core";
+import { useUrlQueryParam } from "utils";
 
 const ExcludeIngredsInput = () => {
   const [{ excludeIngredients = undefined }, setParams] = useUrlQueryParam([
@@ -14,8 +14,8 @@ const ExcludeIngredsInput = () => {
 
   return (
     <TagsInput
-      label="Press Enter ingredients out the recipe"
-      placeholder="Enter ingredients"
+      label="Specific ingredients to exclude"
+      placeholder="Exclude ingredients"
       defaultValue={
         excludeIngredients ? excludeIngredients.split(",") : undefined
       }

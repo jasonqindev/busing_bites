@@ -1,13 +1,14 @@
-import { useContext } from "react";
-import { AuthContext } from "context/auth-context";
 import { Navigate, useLocation } from "react-router-dom";
+
+import { AuthContext } from "context/auth-context";
+import { useContext } from "react";
 
 function RequireAuth({ children }: { children:JSX.Element }) {
   const { currentUser } = useContext(AuthContext)
   let location = useLocation()
 
   if (!currentUser) {
-    return <Navigate to="/" state={ { from: location } } replace />;
+    return <Navigate to="/auth/login" state={ { from: location } } replace />;
   }
 
   return children;
