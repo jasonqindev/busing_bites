@@ -75,7 +75,7 @@ const Login: FC = () => {
 
                     <Group justify="space-between" mt="lg">
                         <Checkbox label="Remember me" />
-                        <Anchor component="button" size="sm">
+                        <Anchor component="button" size="sm" onClick={() => navigate('/auth/forgot')}>
                             Forgot password?
                         </Anchor>
                     </Group>
