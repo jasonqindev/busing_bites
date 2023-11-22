@@ -1,7 +1,7 @@
 const express = require('express');
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, set } = require("firebase/database");
-const { getStorage, ref } = require ("firebase/storage");
+const { getStorage, uploadBytes } = require ("firebase/storage");
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqathouN5NbvaOPY1ryIJ4auBQFEjtGcQ",
@@ -19,6 +19,7 @@ const fb = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(fb);
+const storage = getStorage(fb);
 
 const app = express();
 const port = 3000;
@@ -27,11 +28,6 @@ app.use(express.json()); // Middleware to parse JSON
 
 function submitRecipe(req, res) {
   const recipeData = req.body; // Accessing the JSON payload from the request body
-
-  /*
-  const recipeData = {
-    title: req.body.title,
-  };*/
 
   const recipesRef = ref(database, '/recipes'); // Reference to the recipes node in your database
 
@@ -62,7 +58,25 @@ function submitRecipe(req, res) {
 }
 
 async function submitImage(req, res){
+  if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+  }
 
+  try {
+      // Create a reference to 'images/filename'
+      const fileRef = ref(storage, `images/${req.file.originalname}`);
+
+      // Upload the file to Firebase Storage
+      const snapshot = await uploadBytes(fileRef, req.file.buffer);
+
+      // Get the URL of the uploaded file
+      const url = await getDownloadURL(snapshot.ref);
+
+      res.status(200).send({url});
+  } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+  }
 }
 
 app.post('/submit-recipe', (req, res) => {
