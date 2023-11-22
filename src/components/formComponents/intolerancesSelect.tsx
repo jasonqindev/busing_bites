@@ -1,5 +1,5 @@
-import { intolerances as intolerancesList } from "utils/recipeData";
 import { Select } from "@mantine/core";
+import { intolerances as intolerancesList } from "utils/recipeData";
 import { useUrlQueryParam } from "utils";
 
 const IntolerancesSelect = () => {
@@ -7,9 +7,9 @@ const IntolerancesSelect = () => {
 
   return (
     <Select
-      placeholder="pick a intolerance type"
+      placeholder="select allergies"
       value={intolerances}
-      label="Intolerances"
+      label="allergies"
       data={intolerancesList}
       clearable
       onChange={(value) => {

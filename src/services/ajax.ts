@@ -24,9 +24,10 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    const { message } = error;
-    if (message) {
-      toast.error(message);
+    const { message: origin_message, response } = error;
+    const { message } = response.data;
+    if (message || origin_message) {
+      toast.error(message || origin_message);
     }
     return Promise.reject(error);
   }
@@ -35,9 +36,10 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (res) => res.data,
   function (error) {
-    const { message } = error.response.data;
-    if (message) {
-      toast.error(message);
+    const { message: origin_message, response } = error;
+    const { message } = response.data;
+    if (message || origin_message) {
+      toast.error(message || origin_message);
     }
     return Promise.reject(error);
   }

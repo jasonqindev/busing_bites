@@ -1,9 +1,10 @@
-import { useUrlQueryParam } from "utils";
-import { FC, useState } from "react";
-import { useLoadAutoComplete } from "hooks/useLoadRecipe";
-import { AutoCompleteItemProps } from "types/recipeAjax";
 import { Autocomplete, AutocompleteProps } from "@mantine/core";
+import { FC, useState } from "react";
+
+import { AutoCompleteItemProps } from "types/recipeAjax";
 import { useDebounceEffect } from "ahooks";
+import { useLoadAutoComplete } from "hooks/useLoadRecipe";
+import { useUrlQueryParam } from "utils";
 
 const RecipeInput: FC<AutocompleteProps> = (props) => {
   const [{ query = "" }, setParams] = useUrlQueryParam(["query"]);
@@ -19,9 +20,7 @@ const RecipeInput: FC<AutocompleteProps> = (props) => {
       query && autoComplete(query);
     },
     [query],
-    {
-      wait: 200,
-    }
+    { wait: 200, }
   );
 
   function AutoCompleteListFilter(data: AutoCompleteItemProps[]) {

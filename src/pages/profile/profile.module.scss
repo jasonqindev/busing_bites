@@ -1,0 +1,45 @@
+.profilePage {
+  width: 100vw;
+  padding: 40px 0;
+  background-color: rgb(245, 248, 250);
+}
+.container {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 1215px;
+  min-height: calc(100vh - 63px - 80px);
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  .left {
+    flex: 0 0 150px;
+    width: 150px;
+    padding: 30px 5px;
+    border-right: 1px solid #e3e3e3;
+
+    .navItem {
+      cursor: pointer;
+    }
+
+    .active {
+      background: linear-gradient(90deg, rgb(127, 170, 245), rgb(224, 52, 75));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .main {
+    flex: 1;
+    padding: 30px 40px;
+
+    .fromItemGroup {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  }
+}

@@ -77,7 +77,6 @@ const RecipeCreate = () => {
           </Title>
           <Box className={styles.formItem}>
             <TextInput
-              withAsterisk
               label="recipe name"
               placeholder="name a recipe"
               {...form.getInputProps("title")}

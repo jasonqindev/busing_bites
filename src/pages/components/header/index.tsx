@@ -1,14 +1,27 @@
-import { Image, Avatar, Box, Group, Divider, Menu, Text } from "@mantine/core";
-import styles from "./header.module.scss";
 import {
   ABOUT_US_PAGE,
+  HOME_PAGE,
+  LOGIN_PAGE,
+  PROFILE_PAGE,
   RECIPES_ANALYST_PAGE,
   RECIPES_CREATE_PAGE,
   RECIPES_PAGE,
 } from "const";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Group,
+  Image,
+  Menu,
+  Text,
+} from "@mantine/core";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
+import styles from "./header.module.scss";
 
 const navBar = [
   { title: "Recipe list", href: RECIPES_PAGE },
@@ -19,13 +32,19 @@ const navBar = [
 
 const Header = () => {
   const { pathname } = useLocation();
+  const nav = useNavigate();
 
   return (
     <header className={styles.header}>
       <Group>
-        <Box className={styles.logo} mr={100}>
-          <Image src="" />
-          logo
+        <Box
+          className={styles.logo}
+          mr={100}
+          onClick={() => {
+            nav(HOME_PAGE);
+          }}
+        >
+          <Image src="/images/logo_s.png" />
         </Box>
 
         <Box className={styles.navbar}>
@@ -45,6 +64,13 @@ const Header = () => {
         </Box>
       </Group>
 
+      {/* <Button
+        onClick={() => {
+          nav(LOGIN_PAGE);
+        }}
+      >
+        Login
+      </Button> */}
       <Menu shadow="md" width={120} withArrow>
         <Menu.Target>
           <Avatar color="cyan" radius="xl" style={{ cursor: "pointer" }}>
@@ -53,7 +79,12 @@ const Header = () => {
         </Menu.Target>
 
         <Menu.Dropdown>
-          <Menu.Item leftSection={<BsFillPeopleFill size={20} />}>
+          <Menu.Item
+            leftSection={<BsFillPeopleFill size={20} />}
+            onClick={() => {
+              nav(PROFILE_PAGE);
+            }}
+          >
             <Text ml={5}>Profile</Text>
           </Menu.Item>
           <Menu.Divider />

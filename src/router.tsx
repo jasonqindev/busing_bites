@@ -13,6 +13,7 @@ import Register from "pages/auth/register";
 import Verify from "pages/auth/verify";
 import { createBrowserRouter } from "react-router-dom";
 import ForgotPassword from "pages/auth/forgot";
+import Profile from "pages/profile";
 
 export const HOME = "/";
 
@@ -40,6 +41,16 @@ const routerConfig = createBrowserRouter([
       {
         path: "create",
         element: <RecipeCreate />,
+      },
+    ],
+  },
+  {
+    path: "",
+    element: <RecipeLayout />,
+    children: [
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
