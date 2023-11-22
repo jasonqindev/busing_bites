@@ -7,7 +7,9 @@ import {
     sendEmailVerification,
     signInWithEmailAndPassword,
     signOut,
-    updateProfile
+    updateProfile,
+    confirmPasswordReset,
+    sendPasswordResetEmail
 } from 'firebase/auth';
 
 import { getFirebaseConfig } from './firebaseSetup';
@@ -35,6 +37,16 @@ export const registerUser = async (
     await sendEmailVerification(auth.currentUser)
     await updateProfile(auth.currentUser, { displayName: name })
 };
+
+export const sendThePasswordResetEmail = async (email: string) => {
+    if (!email) return;
+    await sendPasswordResetEmail(auth, email);
+}
+
+export const confirmThePasswordReset = async (code: string, newPassword: string) => {
+    if (!code && !newPassword) return;
+    await confirmPasswordReset(auth, code, newPassword);
+}
 
 export const updateProfilePicture = async (photoURL: string) => {
     if (!auth.currentUser) return;

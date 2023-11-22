@@ -12,6 +12,7 @@ import RecipeList from "pages/recipe/recipe-list";
 import Register from "pages/auth/register";
 import Verify from "pages/auth/verify";
 import { createBrowserRouter } from "react-router-dom";
+import ForgotPassword from "pages/auth/forgot";
 
 export const HOME = "/";
 
@@ -71,6 +72,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "logout",
         element: <Logout/>
+      },
+      {
+        path: "forgot",
+        element: <ForgotPassword/>
       }
     ],
   },
