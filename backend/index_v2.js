@@ -1,6 +1,6 @@
 const express = require('express');
 const { initializeApp } = require("firebase/app");
-const { getDatabase, ref, push, set } = require("firebase/database");
+const { getDatabase, ref, push, set, update, get, remove } = require("firebase/database");
 const { getStorage, uploadBytes } = require ("firebase/storage");
 
 const firebaseConfig = {
@@ -78,6 +78,62 @@ async function submitImage(req, res){
       res.status(500).send(error.message);
   }
 }
+
+app.get('/user/get/:id', (req, res) => {
+  const id = req.params.id;
+  const userRef = ref(database, `/users/${id}`);
+  get(userRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const user = snapshot.val();
+      res.status(200).send(user);
+    } else {
+      res.status(404).send('User not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+});
+
+app.post('/user/create/:id', (req, res) => {
+  const userId = req.params.id;
+  const userData = req.body;
+  const userRef = ref(database, `/users/${userId}`);
+  set(userRef, userData)
+    .then(() => {
+      console.log(`User created successfully with id: ${userId}`);
+      res.status(200).send(`User created successfully with id: ${userId}`);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(400).send(error);
+    });
+});
+
+app.post('/user/update/:id', (req, res) => {
+  const id = req.params.id;
+  const userData = req.body;
+  const userRef = ref(database, `/users/${id}`);
+  update(userRef, userData).then(() => {
+    console.log(`User updated successfully with id: ${id}`);
+    res.status(200).send(`User updated successfully with id: ${id}`);
+  }).catch((error) => {
+    console.error(error);
+    res.status(400).send(error);
+  });
+});
+
+app.delete('/user/delete/:id', (req, res) => {
+  const id = req.params.id;
+  const userRef = ref(database, `/users/${id}`);
+  remove(userRef).then(() => {
+    console.log(`User deleted successfully with id: ${id}`);
+    res.status(200).send(`User deleted successfully with id: ${id}`);
+  }).catch((error) => {
+    console.error(error);
+    res.status(400).send(error);
+  });
+});
 
 app.post('/submit-recipe', (req, res) => {
   submitRecipe(req, res);
