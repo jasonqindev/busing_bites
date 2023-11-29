@@ -63,13 +63,14 @@ function submitRecipe(req, res) {
 }
 
 /**
- * 
+ * Handles image submission
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
 async function submitImage(req, res) {
   let buffer = Buffer.alloc(0);
 
+  // read the image into a buffer, and check if it's too big
   req.on('data', (data) => {
     buffer = Buffer.concat([buffer, data]);
     if (buffer.length > (5 * 1024 * 1024)) {
@@ -78,6 +79,7 @@ async function submitImage(req, res) {
     }
   });
 
+  // once we're done reading the image, upload it to firebase
   req.on('end', () => {
     const uuid = randomUUID();
     const imageRef = sRef(storage, `images/${uuid}`);
