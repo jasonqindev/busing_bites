@@ -98,7 +98,7 @@ async function submitImage(req, res) {
 
     // generate a uuid based on the md5 of the file
     const md5 = crypto.createHash('md5').update(buffer).digest('hex');
-    
+
     // format like a uuid
     const uuid = `${md5.slice(0, 8)}-${md5.slice(8, 12)}-${md5.slice(12, 16)}-${md5.slice(16, 20)}-${md5.slice(20, 32)}`;
     const imageRef = sRef(storage, `images/${uuid}`);
@@ -109,7 +109,7 @@ async function submitImage(req, res) {
       .then(() => getDownloadURL(imageRef)) // yoink a download url
       .then((url) => {
         // send it back
-        res.status(200).send(url);
+        res.status(200).send({ url: url, id: uuid });
       })
       .catch((error) => {
         console.error(error);
