@@ -9,6 +9,7 @@ import RecipeItem from "./components/recipeItem";
 import NutritionAnalyst from "./nutritionAnalyst";
 import { useDispatch } from "react-redux";
 import { updateMeatIds } from "store/reducer/analyst";
+import { changeSelectedId } from "store/reducer/analyst";
 import DailyReport from "./dailyReport";
 
 const RecipeAnalyst = () => {
@@ -28,6 +29,12 @@ const RecipeAnalyst = () => {
       dispatch(updateMeatIds(ids.map((c) => c.id)));
     }
   }, [reportModalStatus]); // eslint-disable-line
+
+  useEffect(() => {
+    return () => {
+      dispatch(changeSelectedId(""));
+    };
+  }, []); // eslint-disable-line
 
   const updateRecipes = (recipes: RecipeCardProps[]) => {
     setRecipes(recipes);
