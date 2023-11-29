@@ -16,5 +16,5 @@ export const updateUserinfo = async (
   data: Partial<UserinfoType>
 ) => {
   const url = `/api/user/update/${id}`;
-  return await axios.post(url, data);
+  return (await axios.post(url, data)) as UserinfoType;
 };

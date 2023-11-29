@@ -6,6 +6,7 @@ import {
   RECIPES_ANALYST_PAGE,
   RECIPES_CREATE_PAGE,
   RECIPES_PAGE,
+  default_avatar,
 } from "const";
 import {
   Avatar,
@@ -75,9 +76,11 @@ const Header: FC<PropsType> = ({ isHome = false }) => {
       {currentUser ? (
         <Menu shadow="md" width={120} withArrow>
           <Menu.Target>
-            <Avatar color="cyan" radius="xl" style={{ cursor: "pointer" }}>
-              MK
-            </Avatar>
+            <Avatar
+              src={currentUser.avatar ? currentUser.avatar : default_avatar}
+              radius="xl"
+              style={{ cursor: "pointer", background: "#f3f3f3" }}
+            />
           </Menu.Target>
 
           <Menu.Dropdown>

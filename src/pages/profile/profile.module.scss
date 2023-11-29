@@ -33,13 +33,31 @@
 
   .main {
     flex: 1;
-    padding: 30px 40px;
+    padding-top: 20px 0;
 
-    .fromItemGroup {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      align-items: flex-start;
+    .title {
+      padding: 20px 40px;
+      border-bottom: 1px solid #e3e3e3;
+    }
+
+    .recipes {
+      padding: 30px 40px;
+    }
+
+    .form {
+      padding: 30px 40px;
+      img {
+        width: 100px;
+        height: 100px;
+        background-color: #f3f3f3;
+        border-radius: 50%;
+      }
+      .fromItemGroup {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
     }
   }
 }

@@ -1,7 +1,10 @@
 import {
   Box,
+  Button,
   ComboboxItem,
+  FileButton,
   Group,
+  Image,
   LoadingOverlay,
   NumberInput,
   Select,
@@ -14,9 +17,11 @@ import styles from "../profile.module.scss";
 import { isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/auth-context";
-import { useGetUserinfo, useUpdateUserinfo } from "hooks/useLoadUserinfo";
+import { useUpdateUserinfo } from "hooks/useLoadUserinfo";
 import toast from "react-hot-toast";
 import { useAuthCheck } from "hooks/useAuthCheck";
+import { useUploadImg } from "hooks/useUpload";
+import { default_avatar } from "const";
 
 const dietPlan: ComboboxItem[] = [
   {
@@ -35,12 +40,13 @@ const dietPlan: ComboboxItem[] = [
 
 function UserinfoPage() {
   const { checkAuth } = useAuthCheck();
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const [disabled, setDisabled] = useState(true);
   const form = useForm({
     initialValues: {
-      username: "",
       email: "",
+      username: "",
+      avatar: default_avatar,
       firstName: "",
       lastName: "",
       age: 18,
@@ -59,23 +65,25 @@ function UserinfoPage() {
       dietPlan: isNotEmpty("diet plan can not be empty"),
     },
   });
-  const { data: userinfo, run: getUserinfo } = useGetUserinfo();
-  const { run: updateUserinfo, loading } = useUpdateUserinfo(() => {
+
+  const { run: upload } = useUploadImg((res) => {
+    form.setValues({
+      avatar: res.url,
+    });
+  });
+
+  const { run: updateUserinfo, loading } = useUpdateUserinfo((data) => {
     setDisabled(!disabled);
     toast.success("update userinfo successfully");
+    setCurrentUser({ ...currentUser, ...data });
   });
 
   useEffect(() => {
-    if (currentUser && currentUser.uid) {
-      getUserinfo(currentUser.uid);
-    }
-  }, [currentUser]); // eslint-disable-line
-
-  useEffect(() => {
-    if (userinfo) {
+    if (currentUser) {
       const {
         username = "",
         email = "",
+        avatar = default_avatar,
         gender = "male",
         age = 18,
         height = "",
@@ -83,13 +91,14 @@ function UserinfoPage() {
         dietPlan = "",
         firstName = "",
         lastName = "",
-      } = userinfo;
+      } = currentUser;
 
       form.setValues({
         username,
         email,
         firstName,
         lastName,
+        avatar,
         gender,
         age,
         height,
@@ -97,7 +106,13 @@ function UserinfoPage() {
         dietPlan,
       });
     }
-  }, [userinfo]); // eslint-disable-line
+  }, [currentUser]); // eslint-disable-line
+
+  const handleAvatar = (file: File | null) => {
+    if (file) {
+      upload(file);
+    }
+  };
 
   const handleSwitch = () => {
     if (!checkAuth()) return;
@@ -116,9 +131,9 @@ function UserinfoPage() {
   };
 
   return (
-    <>
+    <div className={styles.mainPage}>
       <LoadingOverlay visible={loading} zIndex={1000} />
-      <Group mb={30}>
+      <Group className={styles.title}>
         <Title mr={50}>Profile</Title>
         <Switch
           checked={disabled}
@@ -127,7 +142,20 @@ function UserinfoPage() {
           onChange={handleSwitch}
         />
       </Group>
-      <form>
+      <form className={styles.form}>
+        <Box mb={30}>
+          <Text fw={500} mb={15}>
+            avatar
+          </Text>
+          <Image mb={15} src={form.values.avatar}></Image>
+          <FileButton onChange={handleAvatar} accept="image/png,image/jpeg">
+            {(props) => (
+              <Button disabled={disabled} {...props} size="xs">
+                Upload image
+              </Button>
+            )}
+          </FileButton>
+        </Box>
         <Box className={styles.fromItemGroup} mb={30}>
           <TextInput
             readOnly
@@ -204,7 +232,7 @@ function UserinfoPage() {
           />
         </Box>
       </form>
-    </>
+    </div>
   );
 }
 

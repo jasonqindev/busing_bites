@@ -1,8 +1,9 @@
 export interface UserinfoType {
-  id: string;
+  uid: string;
   username: string;
   lastName: string;
   firstName: string;
+  avatar: string;
   email: string;
   password: string;
   gender: string;
