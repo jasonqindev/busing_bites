@@ -102,7 +102,7 @@ app.post('/api/user/create/:id', (req, res) => {
   set(userRef, userData)
     .then(() => {
       console.log(`User created successfully with id: ${userId}`);
-      res.status(200).json({ id: userId, ...userData});
+      res.status(200).json({ id: userId});
     })
     .catch((error) => {
       console.error(error);
