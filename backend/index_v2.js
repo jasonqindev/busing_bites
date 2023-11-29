@@ -136,7 +136,7 @@ app.post('/api/user/create/:id', (req, res) => {
   set(userRef, userData)
     .then(() => {
       console.log(`User created successfully with id: ${userId}`);
-      res.status(200).json({ id: userId});
+      res.status(200).json({ id: userId });
     })
     .catch((error) => {
       console.error(error);
@@ -150,7 +150,7 @@ app.post('/api/user/update/:id', (req, res) => {
   const userRef = ref(database, `/users/${id}`);
   update(userRef, userData).then(() => {
     console.log(`User updated successfully with id: ${id}`);
-    res.status(200).json({ id: id, ...userData});
+    res.status(200).json({ id: id, ...userData });
   }).catch((error) => {
     console.error(error);
     res.status(400).send(error);
