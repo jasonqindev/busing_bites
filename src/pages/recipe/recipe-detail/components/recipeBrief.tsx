@@ -8,6 +8,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 
 import { RecipeProps } from "types/recipeAjax";
 import { judgeItem } from "const";
+import CImage from "components/c_image";
 
 type DietOption =
   | "vegetarian"
@@ -81,16 +82,16 @@ const RecipeBrief = ({
             <div key={item} className={styles.judgeItem}>
               <span>{item}</span>
               {props[item as DietOption] ? (
-                <img src="/images/correct.png" alt="correct" />
+                <Image src="/images/correct.png" alt="correct" />
               ) : (
-                <img src="/images/remove.png" alt="error" />
+                <Image src="/images/remove.png" alt="error" />
               )}
             </div>
           ))}
         </div>
       </div>
       <div className={styles.right}>
-        <Image
+        <CImage
           src={image}
           alt="recipe"
           fallbackSrc="/images/img_default.jpeg"
