@@ -11,7 +11,7 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import {
   registerUser,
   signInUser,
@@ -19,15 +19,23 @@ import {
   userStateListener,
 } from "../../../firebase/firebase";
 
-import { AuthContext } from "context/auth-context";
+import { useAuth } from "context/auth-context";
 import styles from "./register.module.scss";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
+import { useCreateUser } from "hooks/useLoadUserinfo";
+import { HOME_PAGE } from "const";
 
 const Login: FC = () => {
   const [loading, setLoading] = useState(false);
-  const { setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate(HOME_PAGE);
+    }
+  }, [currentUser]); // eslint-disable-line
 
   const form = useForm({
     initialValues: {
@@ -54,12 +62,7 @@ const Login: FC = () => {
     },
   });
 
-  userStateListener((user) => {
-    if (user) {
-      setCurrentUser(user);
-      navigate("/");
-    }
-  });
+  const { run: createUser } = useCreateUser();
 
   const handleRegister = async () => {
     form.validate();
@@ -67,13 +70,14 @@ const Login: FC = () => {
 
     setLoading(true);
 
+    const username = form.values.username;
+    const email = form.values.email;
+    const password = form.values.password;
     try {
-      await registerUser(
-        form.values.username,
-        form.values.email,
-        form.values.password
-      );
-
+      const res = await registerUser(username, email, password);
+      if (res && res.user) {
+        await createUser(res.user.uid, { username, email, password });
+      }
       navigate("/auth/verify");
     } catch (error) {
       console.log(error);

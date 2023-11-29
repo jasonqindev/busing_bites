@@ -8,6 +8,7 @@ import { useUrlQueryParam } from "utils";
 import { useNavigate } from "react-router-dom";
 import { RECIPES_PAGE } from "const";
 import RecipeInput from "components/formComponents/recipeInput";
+import { useAuthCheck } from "hooks/useAuthCheck";
 
 interface PropsType {
   panelStatus: boolean;
@@ -16,6 +17,7 @@ interface PropsType {
 
 const SearchBox: FC<PropsType> = ({ panelStatus, handlePanelStatus }) => {
   const nav = useNavigate();
+  const { checkAuth } = useAuthCheck();
   const [{ query }] = useUrlQueryParam(["query"]);
 
   const handlePanelOpen = () => {
@@ -23,6 +25,7 @@ const SearchBox: FC<PropsType> = ({ panelStatus, handlePanelStatus }) => {
   };
 
   const handleSearch = () => {
+    if (!checkAuth()) return;
     if (query) {
       nav(RECIPES_PAGE + window.location.search);
     }

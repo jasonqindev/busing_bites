@@ -1,9 +1,8 @@
 import { Center, Paper, Title } from "@mantine/core";
 import styles from "./profile.module.scss";
 import { useState } from "react";
-import Userinfo from "./components/userinfo";
+import UserinfoPage from "./components/userinfo";
 import MyRecipes from "./components/myRecipes";
-import { data } from "./components/data";
 
 const nav = [
   {
@@ -44,7 +43,7 @@ function Profile() {
           ))}
         </div>
         <div className={styles.main}>
-          {index === 0 ? <Userinfo /> : <MyRecipes recipes={data} />}
+          {index === 0 ? <UserinfoPage /> : <MyRecipes recipes={[]} />}
         </div>
       </Paper>
     </div>

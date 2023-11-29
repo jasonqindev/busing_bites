@@ -3,11 +3,19 @@ import { BsImage, BsUpload } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import styles from "./components.module.scss";
-import { useState } from "react";
+import { FC } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useUploadImg } from "hooks/useUpload";
 
-const ImageUpload = () => {
-  const [image, setImage] = useState("");
+interface PropsType {
+  image: string;
+  setImage: (image: string) => void;
+}
+
+const ImageUpload: FC<PropsType> = ({ image, setImage }) => {
+  const { run: upload } = useUploadImg((res) => {
+    setImage(res.url);
+  });
 
   const handleDrop = (files: FileWithPath[]) => {
     const file = files[0];
@@ -16,7 +24,7 @@ const ImageUpload = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target && event.target.result) {
-          setImage(String(event.target.result));
+          upload(file);
         }
       };
       reader.readAsDataURL(file);

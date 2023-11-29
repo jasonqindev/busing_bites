@@ -2,6 +2,7 @@ import {
   Box,
   ComboboxItem,
   Group,
+  LoadingOverlay,
   NumberInput,
   Select,
   Switch,
@@ -10,8 +11,12 @@ import {
   Title,
 } from "@mantine/core";
 import styles from "../profile.module.scss";
-import { isEmail, isInRange, isNotEmpty, useForm } from "@mantine/form";
-import { useState } from "react";
+import { isInRange, isNotEmpty, useForm } from "@mantine/form";
+import { useEffect, useState } from "react";
+import { useAuth } from "context/auth-context";
+import { useGetUserinfo, useUpdateUserinfo } from "hooks/useLoadUserinfo";
+import toast from "react-hot-toast";
+import { useAuthCheck } from "hooks/useAuthCheck";
 
 const dietPlan: ComboboxItem[] = [
   {
@@ -28,13 +33,16 @@ const dietPlan: ComboboxItem[] = [
   },
 ];
 
-function Userinfo() {
+function UserinfoPage() {
+  const { checkAuth } = useAuthCheck();
+  const { currentUser } = useAuth();
   const [disabled, setDisabled] = useState(true);
   const form = useForm({
     initialValues: {
+      username: "",
+      email: "",
       firstName: "",
       lastName: "",
-      email: "",
       age: 18,
       gender: "male",
       height: "",
@@ -45,15 +53,55 @@ function Userinfo() {
     validate: {
       firstName: isNotEmpty("first name can not be empty"),
       lastName: isNotEmpty("last name can not be empty"),
-      email: isEmail("Invalid email"),
       age: isInRange({ min: 5, max: 99 }, "You must set 5-99"),
       height: isNotEmpty("height can not be empty"),
       weight: isNotEmpty("weight can not be empty"),
       dietPlan: isNotEmpty("diet plan can not be empty"),
     },
   });
+  const { data: userinfo, run: getUserinfo } = useGetUserinfo();
+  const { run: updateUserinfo, loading } = useUpdateUserinfo(() => {
+    setDisabled(!disabled);
+    toast.success("update userinfo successfully");
+  });
+
+  useEffect(() => {
+    if (currentUser && currentUser.uid) {
+      getUserinfo(currentUser.uid);
+    }
+  }, [currentUser]); // eslint-disable-line
+
+  useEffect(() => {
+    if (userinfo) {
+      const {
+        username = "",
+        email = "",
+        gender = "male",
+        age = 18,
+        height = "",
+        weight = "",
+        dietPlan = "",
+        firstName = "",
+        lastName = "",
+      } = userinfo;
+
+      form.setValues({
+        username,
+        email,
+        firstName,
+        lastName,
+        gender,
+        age,
+        height,
+        weight,
+        dietPlan,
+      });
+    }
+  }, [userinfo]); // eslint-disable-line
 
   const handleSwitch = () => {
+    if (!checkAuth()) return;
+
     if (disabled) {
       setDisabled(!disabled);
       return;
@@ -62,13 +110,14 @@ function Userinfo() {
     const { hasErrors } = form.validate();
     if (hasErrors) return;
     const data = form.getTransformedValues();
-    console.log(data);
-
-    setDisabled(!disabled);
+    if (currentUser && currentUser.uid) {
+      updateUserinfo(currentUser.uid, data);
+    }
   };
 
   return (
     <>
+      <LoadingOverlay visible={loading} zIndex={1000} />
       <Group mb={30}>
         <Title mr={50}>Profile</Title>
         <Switch
@@ -81,30 +130,39 @@ function Userinfo() {
       <form>
         <Box className={styles.fromItemGroup} mb={30}>
           <TextInput
-            disabled={disabled}
+            readOnly
+            style={{ width: "400px" }}
+            label="email"
+            {...form.getInputProps("email")}
+            description={"readonly"}
+          />
+        </Box>
+        <Box className={styles.fromItemGroup} mb={30}>
+          <TextInput
+            readOnly
+            label="username"
+            {...form.getInputProps("username")}
+            description={"readonly"}
+          />
+        </Box>
+        <Box className={styles.fromItemGroup} mb={30}>
+          <TextInput
+            readOnly={disabled}
             label="first name"
             maxLength={20}
             mr={30}
             {...form.getInputProps("firstName")}
           />
           <TextInput
-            disabled={disabled}
+            readOnly={disabled}
             label="last name"
             maxLength={20}
             {...form.getInputProps("lastName")}
           />
         </Box>
         <Box className={styles.fromItemGroup} mb={30}>
-          <TextInput
-            disabled={disabled}
-            style={{ width: "400px" }}
-            label="email"
-            {...form.getInputProps("email")}
-          />
-        </Box>
-        <Box className={styles.fromItemGroup} mb={30}>
           <Select
-            disabled={disabled}
+            readOnly={disabled}
             label="gender"
             data={["male", "female"]}
             {...form.getInputProps("gender")}
@@ -112,7 +170,7 @@ function Userinfo() {
         </Box>
         <Box className={styles.fromItemGroup} mb={30}>
           <NumberInput
-            disabled={disabled}
+            readOnly={disabled}
             mr={20}
             label="age"
             maxLength={2}
@@ -122,7 +180,7 @@ function Userinfo() {
         </Box>
         <Box className={styles.fromItemGroup} mb={30}>
           <NumberInput
-            disabled={disabled}
+            readOnly={disabled}
             rightSection={<Text style={{ flex: "0 0 40px" }}>cm</Text>}
             mr={20}
             label="height"
@@ -130,7 +188,7 @@ function Userinfo() {
             {...form.getInputProps("height")}
           />
           <NumberInput
-            disabled={disabled}
+            readOnly={disabled}
             rightSection={<Text style={{ flex: "0 0 40px" }}>kg</Text>}
             label="weight"
             maxLength={3}
@@ -139,7 +197,7 @@ function Userinfo() {
         </Box>
         <Box className={styles.fromItemGroup}>
           <Select
-            disabled={disabled}
+            readOnly={disabled}
             label="diet plan"
             data={dietPlan}
             {...form.getInputProps("dietPlan")}
@@ -150,4 +208,4 @@ function Userinfo() {
   );
 }
 
-export default Userinfo;
+export default UserinfoPage;

@@ -66,3 +66,23 @@ export interface AnalystProps {
     unit: string;
   }[];
 }
+
+export interface UploadProps {
+  id: string;
+  url: string;
+}
+
+export interface UploadRecipeProps {
+  title: string;
+  image: string;
+  readyInMinutes: number;
+  servings: number;
+  dishTypes: string[];
+  diets: string[];
+  ingredients: string[];
+  steps: {
+    step: string;
+    ingredients: string[];
+    equipment: string[];
+  }[];
+}

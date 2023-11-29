@@ -5,8 +5,11 @@ import {
   AutoCompleteItemProps,
   RecipeProps,
   RecipeResultsProps,
+  UploadProps,
+  UploadRecipeProps,
 } from "types/recipeAjax";
 import queryString from "query-string";
+import { FileWithPath } from "@mantine/dropzone";
 
 export interface ComplexSearchPropsType {
   offset?: number;
@@ -60,4 +63,20 @@ export const loadNutritionInformation = async (id: string) => {
 
   const data = (await axios.get(url)) as AnalystProps;
   return data;
+};
+
+export const uploadImg = async (file: FileWithPath) => {
+  const url = "/api/submit-image";
+
+  return (await axios.post(url, file, {
+    headers: {
+      "Content-Type": "application/octet-stream",
+    },
+  })) as UploadProps;
+};
+
+export const uploadRecipe = async (data: UploadRecipeProps) => {
+  const url = "/api/submit-recipe";
+
+  return await axios.post(url, data);
 };

@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: Props) => {
       }
     });
     return unsubscribe;
-  }, [setCurrentUser]);
+  }, [currentUser]);
 
   const signOut = () => {
     signOutUser();
