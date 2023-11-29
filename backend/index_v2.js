@@ -113,7 +113,7 @@ async function submitImage(req, res) {
   });
 }
 
-app.get('/user/get/:id', (req, res) => {
+app.get('/api/user/get/:id', (req, res) => {
   const id = req.params.id;
   const userRef = ref(database, `/users/${id}`);
   get(userRef).then((snapshot) => {
@@ -129,14 +129,14 @@ app.get('/user/get/:id', (req, res) => {
   });
 });
 
-app.post('/user/create/:id', (req, res) => {
+app.post('/api/user/create/:id', (req, res) => {
   const userId = req.params.id;
   const userData = req.body;
   const userRef = ref(database, `/users/${userId}`);
   set(userRef, userData)
     .then(() => {
       console.log(`User created successfully with id: ${userId}`);
-      res.status(200).send(`User created successfully with id: ${userId}`);
+      res.status(200).json({ id: userId});
     })
     .catch((error) => {
       console.error(error);
@@ -144,20 +144,20 @@ app.post('/user/create/:id', (req, res) => {
     });
 });
 
-app.post('/user/update/:id', (req, res) => {
+app.post('/api/user/update/:id', (req, res) => {
   const id = req.params.id;
   const userData = req.body;
   const userRef = ref(database, `/users/${id}`);
   update(userRef, userData).then(() => {
     console.log(`User updated successfully with id: ${id}`);
-    res.status(200).send(`User updated successfully with id: ${id}`);
+    res.status(200).json({ id: id, ...userData});
   }).catch((error) => {
     console.error(error);
     res.status(400).send(error);
   });
 });
 
-app.delete('/user/delete/:id', (req, res) => {
+app.delete('/api/user/delete/:id', (req, res) => {
   const id = req.params.id;
   const userRef = ref(database, `/users/${id}`);
   remove(userRef).then(() => {
