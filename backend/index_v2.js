@@ -6,8 +6,6 @@ const { getStorage, uploadBytes, getDownloadURL, updateMetadata } = require("fir
 
 const sRef = require('firebase/storage').ref;
 
-const fs = require('fs');
-
 const firebaseConfig = {
   apiKey: "AIzaSyAqathouN5NbvaOPY1ryIJ4auBQFEjtGcQ",
   authDomain: "cs353-team-18.firebaseapp.com",
@@ -81,8 +79,6 @@ async function submitImage(req, res) {
 
   // once we're done reading the image, upload it to firebase
   req.on('end', () => {
-    const uuid = randomUUID();
-    const imageRef = sRef(storage, `images/${uuid}`);
 
     // ensure we're either a jpeg or png
     const header = buffer.slice(0, 4).toString('hex');
@@ -94,11 +90,18 @@ async function submitImage(req, res) {
       type = 'image/jpeg';
     }
     else {
-      // fuck webp all my homies hate webp
+      // all my homies hate webp
       res.status(400)
         .send("Images must be JPEG or PNG.");
       return;
     }
+
+    // generate a uuid based on the md5 of the file
+    const md5 = crypto.createHash('md5').update(buffer).digest('hex');
+    
+    // format like a uuid
+    const uuid = `${md5.slice(0, 8)}-${md5.slice(8, 12)}-${md5.slice(12, 16)}-${md5.slice(16, 20)}-${md5.slice(20, 32)}`;
+    const imageRef = sRef(storage, `images/${uuid}`);
 
     // throw the file at firebase
     uploadBytes(imageRef, buffer)
