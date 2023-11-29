@@ -1,5 +1,5 @@
-const { randomUUID } = require('crypto');
 const express = require('express');
+const crypto = require('crypto');
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, set, update, get, remove } = require("firebase/database");
 const { getStorage, uploadBytes, getDownloadURL, updateMetadata } = require("firebase/storage");
@@ -79,7 +79,6 @@ async function submitImage(req, res) {
 
   // once we're done reading the image, upload it to firebase
   req.on('end', () => {
-
     // ensure we're either a jpeg or png
     const header = buffer.slice(0, 4).toString('hex');
     let type = null;
