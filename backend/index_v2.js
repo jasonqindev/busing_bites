@@ -1,7 +1,12 @@
+const { randomUUID } = require('crypto');
 const express = require('express');
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, set, update, get, remove } = require("firebase/database");
-const { getStorage, uploadBytes } = require ("firebase/storage");
+const { getStorage, uploadBytes, getDownloadURL, updateMetadata } = require("firebase/storage");
+
+const sRef = require('firebase/storage').ref;
+
+const fs = require('fs');
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqathouN5NbvaOPY1ryIJ4auBQFEjtGcQ",
@@ -44,9 +49,9 @@ function submitRecipe(req, res) {
       diets: req.body.diets,
       ingredients: req.body.ingredients
     };
-  
+
     const searchRef = ref(database, `/search/${recipeKey}`);
-  
+
     set(searchRef, recipeSearch);
 
     console.log(`Recipe submitted successfully with key: ${recipeKey}`); // Print the key to the console
@@ -57,26 +62,55 @@ function submitRecipe(req, res) {
   });
 }
 
-async function submitImage(req, res){
-  if (!req.file) {
-      return res.status(400).send('No file uploaded.');
-  }
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+async function submitImage(req, res) {
+  let buffer = Buffer.alloc(0);
 
-  try {
-      // Create a reference to 'images/filename'
-      const fileRef = ref(storage, `images/${req.file.originalname}`);
+  req.on('data', (data) => {
+    buffer = Buffer.concat([buffer, data]);
+    if (buffer.length > (5 * 1024 * 1024)) {
+      res.status(400).send("File too large");
+      req.destroy();
+    }
+  });
 
-      // Upload the file to Firebase Storage
-      const snapshot = await uploadBytes(fileRef, req.file.buffer);
+  req.on('end', () => {
+    const uuid = randomUUID();
+    const imageRef = sRef(storage, `images/${uuid}`);
 
-      // Get the URL of the uploaded file
-      const url = await getDownloadURL(snapshot.ref);
+    // ensure we're either a jpeg or png
+    const header = buffer.slice(0, 4).toString('hex');
+    let type = null;
+    if (header === '89504e47') { // \x89PNG
+      type = 'image/png';
+    }
+    else if (header === 'ffd8ffe0') { // \xFF\xD8\xFF\xE0
+      type = 'image/jpeg';
+    }
+    else {
+      // fuck webp all my homies hate webp
+      res.status(400)
+        .send("Images must be JPEG or PNG.");
+      return;
+    }
 
-      res.status(200).send({url});
-  } catch (error) {
-      console.error(error);
-      res.status(500).send(error.message);
-  }
+    // throw the file at firebase
+    uploadBytes(imageRef, buffer)
+      .then(() => updateMetadata(imageRef, { contentType: type, customMetadata: { uuid } })) // store metadata
+      .then(() => getDownloadURL(imageRef)) // yoink a download url
+      .then((url) => {
+        // send it back
+        res.status(200).send(url);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(400).send(error);
+      });
+  });
 }
 
 app.get('/user/get/:id', (req, res) => {
