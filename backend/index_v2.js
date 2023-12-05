@@ -3,6 +3,8 @@ const crypto = require('crypto');
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, set, update, get, remove } = require("firebase/database");
 const { getStorage, uploadBytes, getDownloadURL, updateMetadata } = require("firebase/storage");
+const { title } = require('process');
+const { types } = require('util');
 
 const sRef = require('firebase/storage').ref;
 
@@ -57,6 +59,86 @@ function submitRecipe(req, res) {
   }).catch((error) => {
     console.error(error);
     res.status(400).send(error);
+  });
+}
+
+function getRecipe(req, res){
+  const info = {
+    title: req.title,
+    types: req.types,
+    diets: req.diets,
+    cuisine: req.cuisine,
+    allergies: req.allergies,
+    needed: req.includeIngredients,
+    exclude: req.excludeIngredients
+  };
+  const recipesRef = ref(database, '/search');
+
+  get(recipesRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      let recipes = snapshot.val();
+
+      // Filter based on search criteria
+      recipes = Object.values(recipes).filter(recipe => {
+        let titleMatch = false;
+        let typesMatch = true;
+        let dietsMatch = true;
+        let cuisineMatch = false;
+        let allergyMatch = true;
+        let neededMatch = true;
+        let excludeMatch = true;
+
+        if(info.title == recipe.title){
+          titleMatch = true;
+        }
+
+        info.types.foreach(type => {
+          if(!(recipe.dishTypes.includes(type))){
+            typesMatch = false;
+          }
+        });
+
+        info.diets.foreach(diet => {
+          if(!(recipe.diets.includes(diet))){
+            dietsMatch = false;
+          }
+        });
+
+        if(info.cuisine == recipe.cuisine){
+          cuisineMatch = true;
+        }
+
+        info.allergies.foreach(allergy => {
+          if(!(recipe.allergies.includes(allergy))){
+            allergyMatch = false;
+          }
+        });
+
+        info.needed.foreach(ingredient => {
+          if(!(recipe.incredients.includes(ingredient))){
+            neededMatch = false;
+          }
+        });
+
+        info.exclude.foreach(ingredient => {
+          if((recipe.incredients.includes(ingredient))){
+            excludeMatch = false;
+          }
+        });
+        
+        return titleMatch && dietsMatch && ingredientsMatch && typesMatch && cuisineMatch && allergyMatch && neededMatch && excludeMatch;
+      });
+
+      // Limit to 20 results
+      recipes = recipes.slice(0, 20);
+
+      res.status(200).send(recipes);
+    } else {
+      res.status(404).send('No recipes found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
   });
 }
 
