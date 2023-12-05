@@ -3,8 +3,6 @@ const crypto = require('crypto');
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, set, update, get, remove } = require("firebase/database");
 const { getStorage, uploadBytes, getDownloadURL, updateMetadata } = require("firebase/storage");
-const { title } = require('process');
-const { types } = require('util');
 
 const sRef = require('firebase/storage').ref;
 
