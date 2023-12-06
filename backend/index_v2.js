@@ -60,7 +60,7 @@ function submitRecipe(req, res) {
   });
 }
 
-function getRecipe(req, res){
+function searchRecipe(req, res){
   const info = {
     title: req.title,
     types: req.types,
@@ -139,6 +139,27 @@ function getRecipe(req, res){
     res.status(500).send(error);
   });
 }
+
+function getRecipe(req, res){
+  const recipeId = req.params.id;
+  const recipeRef = ref(database, `/recipes/${recipeId}`);
+
+  get(recipeRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const recipe = snapshot.val();
+      res.status(200).send(recipe);
+    } else {
+      res.status(404).send('Recipe not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
+
+app.get('/api/recipe/:id', (req, res) => {
+  getRecipe(req, res);
+});
 
 /**
  * Handles image submission
