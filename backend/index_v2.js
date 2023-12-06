@@ -84,7 +84,7 @@ function searchRecipe(req, res){
         let titleMatch = false;
         let typesMatch = true;
         let dietsMatch = true;
-        let cuisineMatch = false;
+        let cuisineMatch = true;
         let allergyMatch = true;
         let neededMatch = true;
         let excludeMatch = true;
@@ -105,9 +105,11 @@ function searchRecipe(req, res){
           }
         });
 
-        if(info.cuisine == recipe.cuisine){
-          cuisineMatch = true;
-        }
+        info.cuisine.forEach(cuisine => {
+          if(!(recipe.cuisine.includes(cuisine))){
+            cuisineMatch = false;
+          }
+        });
 
         info.allergies.forEach(allergy => {
           if(!(recipe.allergies.includes(allergy))){
