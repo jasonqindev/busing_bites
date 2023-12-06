@@ -62,6 +62,7 @@ function submitRecipe(req, res) {
   });
 }
 
+/*
 function searchRecipe(req, res){
   const info = {
     title: req.body.title,
@@ -143,7 +144,7 @@ function searchRecipe(req, res){
     console.error(error);
     res.status(500).send(error);
   });
-} 
+} */
 
 function getRecipe(req, res){
   const recipeId = req.query.id;
@@ -152,6 +153,27 @@ function getRecipe(req, res){
   get(recipeRef).then((snapshot) => {
     if (snapshot.exists()) {
       const recipe = snapshot.val();
+      res.status(200).send(recipe);
+    } else {
+      res.status(404).send('Recipe not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
+
+function getRandomRecipe(req, res){
+  const searchRef = ref(database, `/search`);
+
+  get(searchRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      let recipe = snapshot.val();
+      const max = snapshot.val.keys.length;
+      const randomNum = (Math.floor((Math.random() * max)));
+      
+      recipes = recipes.slice(randomNum-1, randomNum);
+
       res.status(200).send(recipe);
     } else {
       res.status(404).send('Recipe not found');
@@ -320,9 +342,11 @@ app.post('/api/submit-image', (req, res) => {
   submitImage(req, res);
 });
 
+/*
 app.get('/api/search', (req, res) => {
   searchRecipe(req, res);
 });
+*/
 
 app.get('/api/recipe', (req, res) => {
   getRecipe(req, res);
