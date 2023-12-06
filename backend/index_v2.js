@@ -60,6 +60,105 @@ function submitRecipe(req, res) {
   });
 }
 
+function searchRecipe(req, res){
+  const info = {
+    title: req.title,
+    types: req.types,
+    diets: req.diets,
+    cuisine: req.cuisine,
+    allergies: req.allergies,
+    needed: req.includeIngredients,
+    exclude: req.excludeIngredients
+  };
+  const recipesRef = ref(database, '/search');
+
+  get(recipesRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      let recipes = snapshot.val();
+
+      // Filter based on search criteria
+      recipes = Object.values(recipes).filter(recipe => {
+        let titleMatch = false;
+        let typesMatch = true;
+        let dietsMatch = true;
+        let cuisineMatch = false;
+        let allergyMatch = true;
+        let neededMatch = true;
+        let excludeMatch = true;
+
+        if(info.title == recipe.title){
+          titleMatch = true;
+        }
+
+        info.types.foreach(type => {
+          if(!(recipe.dishTypes.includes(type))){
+            typesMatch = false;
+          }
+        });
+
+        info.diets.foreach(diet => {
+          if(!(recipe.diets.includes(diet))){
+            dietsMatch = false;
+          }
+        });
+
+        if(info.cuisine == recipe.cuisine){
+          cuisineMatch = true;
+        }
+
+        info.allergies.foreach(allergy => {
+          if(!(recipe.allergies.includes(allergy))){
+            allergyMatch = false;
+          }
+        });
+
+        info.needed.foreach(ingredient => {
+          if(!(recipe.incredients.includes(ingredient))){
+            neededMatch = false;
+          }
+        });
+
+        info.exclude.foreach(ingredient => {
+          if((recipe.incredients.includes(ingredient))){
+            excludeMatch = false;
+          }
+        });
+        
+        return titleMatch && dietsMatch && ingredientsMatch && typesMatch && cuisineMatch && allergyMatch && neededMatch && excludeMatch;
+      });
+
+      // Limit to 20 results
+      recipes = recipes.slice(0, 20);
+
+      res.status(200).send(recipes);
+    } else {
+      res.status(404).send('No recipes found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
+
+function getRecipe(req, res){
+  //console.log("getrecipe called");
+  const recipeId = req.query.id;
+  //console.log(recipeId);
+  const recipeRef = ref(database, `/recipes/${recipeId}`);
+
+  get(recipeRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const recipe = snapshot.val();
+      res.status(200).send(recipe);
+    } else {
+      res.status(404).send('Recipe not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
+
 /**
  * Handles image submission
  * @param {express.Request} req 
@@ -173,16 +272,20 @@ app.delete('/api/user/delete/:id', (req, res) => {
   });
 });
 
-app.post('/submit-recipe', (req, res) => {
+app.post('/api/submit-recipe', (req, res) => {
   submitRecipe(req, res);
 });
 
-app.post('/submit-image', (req, res) => {
+app.post('/api/submit-image', (req, res) => {
   submitImage(req, res);
 });
 
-app.get('/search', (req, res) => {
-  console.log("SEARCHHHH HAS BEEN CALLED ");
+app.get('/api/search', (req, res) => {
+  searchRecipe(req, res);
+});
+
+app.get('/api/recipe', (req, res) => {
+  getRecipe(req, res);
 });
 
 app.listen(port, () => {

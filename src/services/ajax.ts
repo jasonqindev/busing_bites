@@ -1,7 +1,8 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const apiUrl = process.env.REACT_APP_NUTRITION_URL;
+const nutritionApiUrl = process.env.REACT_APP_NUTRITION_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 const api_key = process.env.REACT_APP_API_KEY;
 
 export type ResponseType = {
@@ -14,13 +15,18 @@ export type ResponseDataType = {
   [key: string]: any;
 };
 
-const instance = axios.create({
-  baseURL: apiUrl,
-});
+const instance = axios.create();
 
 instance.interceptors.request.use(
   function (config) {
-    config.url = config.url?.appendQueryParam("apiKey", api_key || "");
+    if (config.url && config.url.startsWith("/api")) {
+      config.baseURL = "";
+    }
+    if (config.url && config.url.startsWith("/recipes")) {
+      config.baseURL = nutritionApiUrl;
+      config.url = config.url?.appendQueryParam("apiKey", api_key || "");
+    }
+
     return config;
   },
   function (error) {

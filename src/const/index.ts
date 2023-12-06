@@ -10,6 +10,8 @@ export const recipes_pageSize = 20;
 
 export const autoCompleteSize = 15;
 
+export const default_avatar = "/images/default_avatar.png";
+
 export const judgeItem = [
   "vegetarian",
   "vegan",

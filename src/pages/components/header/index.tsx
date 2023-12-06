@@ -6,6 +6,7 @@ import {
   RECIPES_ANALYST_PAGE,
   RECIPES_CREATE_PAGE,
   RECIPES_PAGE,
+  default_avatar,
 } from "const";
 import {
   Avatar,
@@ -72,40 +73,44 @@ const Header: FC<PropsType> = ({ isHome = false }) => {
         </Box>
       </Group>
 
-      <Menu shadow="md" width={120} withArrow>
-        <Menu.Target>
-          <Avatar color="cyan" radius="xl" style={{ cursor: "pointer" }}>
-            MK
-          </Avatar>
-        </Menu.Target>
+      {currentUser ? (
+        <Menu shadow="md" width={120} withArrow>
+          <Menu.Target>
+            <Avatar
+              src={currentUser.avatar ? currentUser.avatar : default_avatar}
+              radius="xl"
+              style={{ cursor: "pointer", background: "#f3f3f3" }}
+            />
+          </Menu.Target>
 
-        <Menu.Dropdown>
-          <Menu.Item
-            leftSection={<BsFillPeopleFill size={20} />}
-            onClick={() => {
-              nav(PROFILE_PAGE);
-            }}
-          >
-            <Text ml={5}>Profile</Text>
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item
-            color="red"
-            leftSection={<BiLogOut size={20} />}
-            onClick={signOut}
-          >
-            <Text ml={5}>Logout</Text>
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-
-      {/* <Button
+          <Menu.Dropdown>
+            <Menu.Item
+              leftSection={<BsFillPeopleFill size={20} />}
+              onClick={() => {
+                nav(PROFILE_PAGE);
+              }}
+            >
+              <Text ml={5}>Profile</Text>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item
+              color="red"
+              leftSection={<BiLogOut size={20} />}
+              onClick={signOut}
+            >
+              <Text ml={5}>Logout</Text>
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      ) : (
+        <Button
           onClick={() => {
             nav(LOGIN_PAGE);
           }}
         >
           Login
-        </Button> */}
+        </Button>
+      )}
     </header>
   );
 };

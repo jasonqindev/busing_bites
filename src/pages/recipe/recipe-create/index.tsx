@@ -18,11 +18,19 @@ import styles from "./recipeCreate.module.scss";
 import { BsFillTrashFill } from "react-icons/bs";
 import ImageUpload from "./components/imageUpload";
 import { diets, foodType } from "utils/recipeData";
+import { useUploadRecipe } from "hooks/useUpload";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { PROFILE_PAGE } from "const";
+import { useAuthCheck } from "hooks/useAuthCheck";
 
 const RecipeCreate = () => {
+  const nav = useNavigate();
+  const { checkAuth } = useAuthCheck();
   const form = useForm({
     initialValues: {
       title: "",
+      image: "",
       readyInMinutes: 30,
       servings: 1,
       dishTypes: [],
@@ -39,6 +47,7 @@ const RecipeCreate = () => {
 
     validate: {
       title: isNotEmpty("recipe name can not be empty"),
+      image: isNotEmpty("recipe image has to be uploaded"),
       diets: isNotEmpty("diets can not be empty"),
       dishTypes: isNotEmpty("dish type can not be empty"),
       readyInMinutes: isNotEmpty("time can not be empty"),
@@ -48,6 +57,13 @@ const RecipeCreate = () => {
         step: isNotEmpty("step can not be empty"),
       },
     },
+  });
+
+  const { run: submit } = useUploadRecipe(() => {
+    toast.success("recipe submit successfully!", { duration: 2000 });
+    setTimeout(() => {
+      nav(PROFILE_PAGE);
+    }, 2000);
   });
 
   const handleAddStep = () => {
@@ -62,16 +78,26 @@ const RecipeCreate = () => {
     form.removeListItem("steps", index);
   };
 
+  const handleImage = (image: string) => {
+    form.setValues({
+      image,
+    });
+  };
+
+  const handleSubmit = () => {
+    if (!checkAuth()) return;
+    const { hasErrors } = form.validate();
+    if (hasErrors) return;
+    const data = form.getTransformedValues();
+    submit(data);
+  };
+
   return (
     <div className={styles.recipePage}>
       <Paper shadow="xl" radius="lg" className={styles.container}>
         <Title mb={20}>Create your own Recipe</Title>
 
-        <form
-          onSubmit={form.onSubmit((values) => {
-            console.log(values);
-          })}
-        >
+        <form>
           <Title order={3} pt={30} mb={20}>
             Basic
           </Title>
@@ -84,7 +110,7 @@ const RecipeCreate = () => {
           </Box>
           <Box className={styles.formItem}>
             <Text className={styles.title}>Upload recipe image</Text>
-            <ImageUpload />
+            <ImageUpload image={form.values.image} setImage={handleImage} />
           </Box>
           <Title order={3} pt={30} mb={20}>
             Options
@@ -188,7 +214,7 @@ const RecipeCreate = () => {
             </Center>
           </Box>
           <Center mt={100}>
-            <Button type="submit" color="indigo" size="lg">
+            <Button onClick={handleSubmit} color="indigo" size="lg">
               Submit Recipe
             </Button>
           </Center>
