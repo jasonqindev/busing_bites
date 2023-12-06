@@ -127,7 +127,7 @@ function searchRecipe(req, res){
           }
         });
         
-        return titleMatch && dietsMatch && ingredientsMatch && typesMatch && cuisineMatch && allergyMatch && neededMatch && excludeMatch;
+        return titleMatch && dietsMatch && typesMatch && cuisineMatch && allergyMatch && neededMatch && excludeMatch;
       });
 
       // Limit to 20 results
@@ -167,6 +167,9 @@ function getRecipe(req, res){
   });
 }
 
+
+//search by user id not functioning yet
+/*
 function getRecipeByUserId(req, res){
   const userId = req.query.userid;
 
@@ -199,6 +202,7 @@ function getRecipeByUserId(req, res){
     res.status(500).send(error);
   });
 }
+*/
 
 /**
  * Handles image submission
