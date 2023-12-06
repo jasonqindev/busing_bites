@@ -135,11 +135,6 @@ function searchRecipe(req, res){
       // Limit to 20 results
       recipes = recipes.slice(0, 20);
 
-      //to be added include more recipes from nutritional api if api is low
-      /*
-
-      */
-
       res.status(200).send(recipes);
     } else {
       res.status(404).send('No recipes found');
@@ -148,12 +143,10 @@ function searchRecipe(req, res){
     console.error(error);
     res.status(500).send(error);
   });
-}
+} 
 
 function getRecipe(req, res){
-  //console.log("getrecipe called");
   const recipeId = req.query.id;
-  //console.log(recipeId);
   const recipeRef = ref(database, `/recipes/${recipeId}`);
 
   get(recipeRef).then((snapshot) => {
