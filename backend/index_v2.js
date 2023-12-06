@@ -157,10 +157,6 @@ function getRecipe(req, res){
   });
 }
 
-app.get('/api/recipe/:id', (req, res) => {
-  getRecipe(req, res);
-});
-
 /**
  * Handles image submission
  * @param {express.Request} req 
@@ -274,16 +270,20 @@ app.delete('/api/user/delete/:id', (req, res) => {
   });
 });
 
-app.post('/submit-recipe', (req, res) => {
+app.post('/api/submit-recipe', (req, res) => {
   submitRecipe(req, res);
 });
 
-app.post('/submit-image', (req, res) => {
+app.post('/api/submit-image', (req, res) => {
   submitImage(req, res);
 });
 
-app.get('/search', (req, res) => {
-  console.log("SEARCHHHH HAS BEEN CALLED ");
+app.get('/api/search', (req, res) => {
+  searchRecipe(req, res);
+});
+
+app.get('/api/recipe/:id', (req, res) => {
+  getRecipe(req, res);
 });
 
 app.listen(port, () => {
