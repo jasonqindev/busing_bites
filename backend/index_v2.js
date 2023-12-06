@@ -168,21 +168,27 @@ function getRandomRecipe(req, res){
 
   get(searchRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let recipe = snapshot.val();
-      const max = snapshot.val.keys.length;
-      const randomNum = (Math.floor((Math.random() * max)));
-      
-      recipes = recipes.slice(randomNum-1, randomNum);
+      const recipes = snapshot.val();
+      const recipeKeys = Object.keys(recipes); // Get an array of keys
 
-      res.status(200).send(recipe);
+      if (recipeKeys.length === 0) {
+        res.status(404).send('No recipes found');
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * recipeKeys.length); // Generate a random index
+      const randomRecipe = recipes[recipeKeys[randomIndex]]; // Get the recipe using the random key
+
+      res.status(200).send(randomRecipe);
     } else {
-      res.status(404).send('Recipe not found');
+      res.status(404).send('No recipes found');
     }
   }).catch((error) => {
     console.error(error);
     res.status(500).send(error);
   });
 }
+
 
 
 //search by user id not functioning yet
@@ -350,6 +356,10 @@ app.get('/api/search', (req, res) => {
 
 app.get('/api/recipe', (req, res) => {
   getRecipe(req, res);
+});
+
+app.get('/api/recipeRandom', (req, res) => {
+  getRandomRecipe(req, res);
 });
 
 app.listen(port, () => {
