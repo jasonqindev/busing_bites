@@ -45,7 +45,9 @@ function submitRecipe(req, res) {
       title: req.body.title,
       dishTypes: req.body.dishTypes,
       diets: req.body.diets,
-      ingredients: req.body.ingredients
+      ingredients: req.body.ingredients,
+      allergies: req.body.allergies,
+      cuisine: req.body.cuisine
     };
 
     const searchRef = ref(database, `/search/${recipeKey}`);
@@ -62,14 +64,15 @@ function submitRecipe(req, res) {
 
 function searchRecipe(req, res){
   const info = {
-    title: req.title,
-    types: req.types,
-    diets: req.diets,
-    cuisine: req.cuisine,
-    allergies: req.allergies,
-    needed: req.includeIngredients,
-    exclude: req.excludeIngredients
+    title: req.body.title,
+    recipeTypes: req.body.types,
+    diets: req.body.diets,
+    cuisine: req.body.cuisine,
+    allergies: req.body.allergies,
+    needed: req.body.includeIngredients,
+    exclude: req.body.excludeIngredients
   };
+  console.log(info);
   const recipesRef = ref(database, '/search');
 
   get(recipesRef).then((snapshot) => {
@@ -90,13 +93,13 @@ function searchRecipe(req, res){
           titleMatch = true;
         }
 
-        info.types.foreach(type => {
+        info.recipeTypes.forEach(type => {
           if(!(recipe.dishTypes.includes(type))){
             typesMatch = false;
           }
         });
 
-        info.diets.foreach(diet => {
+        info.diets.forEach(diet => {
           if(!(recipe.diets.includes(diet))){
             dietsMatch = false;
           }
@@ -106,19 +109,19 @@ function searchRecipe(req, res){
           cuisineMatch = true;
         }
 
-        info.allergies.foreach(allergy => {
+        info.allergies.forEach(allergy => {
           if(!(recipe.allergies.includes(allergy))){
             allergyMatch = false;
           }
         });
 
-        info.needed.foreach(ingredient => {
+        info.needed.forEach(ingredient => {
           if(!(recipe.incredients.includes(ingredient))){
             neededMatch = false;
           }
         });
 
-        info.exclude.foreach(ingredient => {
+        info.exclude.forEach(ingredient => {
           if((recipe.incredients.includes(ingredient))){
             excludeMatch = false;
           }
@@ -129,6 +132,11 @@ function searchRecipe(req, res){
 
       // Limit to 20 results
       recipes = recipes.slice(0, 20);
+
+      //to be added include more recipes from nutritional api if api is low
+      /*
+
+      */
 
       res.status(200).send(recipes);
     } else {
@@ -152,6 +160,39 @@ function getRecipe(req, res){
       res.status(200).send(recipe);
     } else {
       res.status(404).send('Recipe not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
+
+function getRecipeByUserId(req, res){
+  const userId = req.query.userid;
+
+  const searchRef = ref(database, `/recipe/`);
+
+  get(recipesRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      let recipes = snapshot.val();
+
+      // Filter based on search criteria
+      recipes = Object.values(recipes).filter(recipe => {
+        let match = false;
+
+        if(recipe.userId == userId){
+          match = true;
+        }
+       
+        return match;
+      });
+
+      // Limit to 20 results
+      recipes = recipes.slice(0, 20);
+
+      res.status(200).send(recipes);
+    } else {
+      res.status(404).send('No recipes found');
     }
   }).catch((error) => {
     console.error(error);
