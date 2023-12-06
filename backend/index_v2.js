@@ -141,7 +141,9 @@ function searchRecipe(req, res){
 }
 
 function getRecipe(req, res){
-  const recipeId = req.params.id;
+  //console.log("getrecipe called");
+  const recipeId = req.query.id;
+  //console.log(recipeId);
   const recipeRef = ref(database, `/recipes/${recipeId}`);
 
   get(recipeRef).then((snapshot) => {
@@ -282,7 +284,7 @@ app.get('/api/search', (req, res) => {
   searchRecipe(req, res);
 });
 
-app.get('/api/recipe/:id', (req, res) => {
+app.get('/api/recipe', (req, res) => {
   getRecipe(req, res);
 });
 
