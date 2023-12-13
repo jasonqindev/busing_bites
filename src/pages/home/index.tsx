@@ -14,14 +14,20 @@ function Home() {
 
   return (
     <div className={styles.homePage}>
+         <div className={styles.logo}>
+          <img
+            src="/images/logo.png" height={250}
+          />
+        </div>
       <div className={styles.searchContainer}>
-        <h1 className={styles.title}>The Recipe of Food Paradise!</h1>
+        <h1 className={styles.title}>Let's expore the tastes of the world together!</h1>
         <SearchBox
           panelStatus={panelStatus}
           handlePanelStatus={handlePanelStatus}
         />
-        <OptionBox panelStatus={panelStatus} />I
+        <OptionBox panelStatus={panelStatus} />
       </div>
+      
     </div>
   );
 }

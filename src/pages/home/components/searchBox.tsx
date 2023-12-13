@@ -12,7 +12,7 @@ import RecipeInput from "components/formComponents/recipeInput";
 interface PropsType {
   panelStatus: boolean;
   handlePanelStatus: (status: boolean) => void;
-}
+   }
 
 const SearchBox: FC<PropsType> = ({ panelStatus, handlePanelStatus }) => {
   const nav = useNavigate();

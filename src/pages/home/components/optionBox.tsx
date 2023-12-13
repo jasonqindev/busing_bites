@@ -10,7 +10,7 @@ interface PropsType {
 const formCompLayout = [
   ["cuisines", "diet"],
   ["intolerances", "type"],
-  ["equipment"],
+
   ["includeIngreds"],
   ["excludeIngreds"],
 ];

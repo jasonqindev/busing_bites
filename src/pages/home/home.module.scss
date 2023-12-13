@@ -7,13 +7,15 @@
   background-image: url(../../../public/images/bg.png);
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  //background-attachment: fixed;
 }
 
+
 .logo {
-  position: absolute;
-  top: 30px;
-  left: 30px;
+  position: relative;
+  top: 30%;
+  left: 40%;
+  transform: translate(20%, -55%);
   width: 120px;
 }
 
@@ -27,5 +29,5 @@
 .title {
   font-size: 32px;
   margin: 0 0 10px;
-  color: #fff;
+  color: #ffffff;
 }

@@ -1,6 +1,5 @@
 import CuisinesSelect from "./cuisinesSelect";
 import DietSelect from "./dietSelect";
-import EquipmentInput from "./equipmentInput";
 import ExcludeIngredsInput from "./exIngredsInput";
 import IncludeIngredsInput from "./inIngredsInput";
 import IntolerancesSelect from "./intolerancesSelect";
@@ -15,8 +14,6 @@ export const getFormComponents = (type: string) => {
       return <DietSelect />;
     case "type":
       return <TypeSelect />;
-    case "equipment":
-      return <EquipmentInput />;
     case "intolerances":
       return <IntolerancesSelect />;
     case "includeIngreds":
