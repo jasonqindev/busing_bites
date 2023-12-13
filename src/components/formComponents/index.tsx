@@ -24,6 +24,6 @@ export const getFormComponents = (type: string) => {
     case "excludeIngreds":
       return <ExcludeIngredsInput />;
     case "recipe":
-      return <RecipeInput label="recipe" placeholder="input a recipe" />;
+      return <RecipeInput label="Search" placeholder="Search by name" />;
   }
 };
