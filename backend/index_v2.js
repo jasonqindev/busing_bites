@@ -39,6 +39,10 @@ function submitRecipe(req, res) {
   newRecipeRef.then(() => {
     const recipeKey = newRecipeRef.key; // Access the key of the new recipe
 
+    const recipeidsubmit = ref(database, `/recipes/${recipeKey}/recipeId`);
+
+    set(recipeidsubmit, recipeKey);
+
     const recipeSearch = {
       id: recipeKey,
       userId: req.body.userId,
@@ -225,7 +229,7 @@ function getRecipeByUserId(req, res){
        
         return match;
       });
-
+      
       res.status(200).send(recipes);
     } else {
       res.status(404).send('No recipes found');
