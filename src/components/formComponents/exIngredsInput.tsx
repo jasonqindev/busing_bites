@@ -1,7 +1,9 @@
 import { TagsInput } from "@mantine/core";
+import { FC } from "react";
 import { useUrlQueryParam } from "utils";
+import { IProps } from ".";
 
-const ExcludeIngredsInput = () => {
+const ExcludeIngredsInput: FC<IProps> = ({ disabled }) => {
   const [{ excludeIngredients = undefined }, setParams] = useUrlQueryParam([
     "excludeIngredients",
   ]);
@@ -21,6 +23,7 @@ const ExcludeIngredsInput = () => {
       }
       clearable
       onChange={handleEnter}
+      disabled={disabled}
     />
   );
 };

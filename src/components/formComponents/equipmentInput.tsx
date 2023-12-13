@@ -1,7 +1,9 @@
 import { TagsInput } from "@mantine/core";
+import { FC } from "react";
 import { useUrlQueryParam } from "utils";
+import { IProps } from ".";
 
-const EquipmentInput = () => {
+const EquipmentInput: FC<IProps> = ({ disabled }) => {
   const [{ equipment = undefined }, setParams] = useUrlQueryParam([
     "equipment",
   ]);
@@ -19,6 +21,7 @@ const EquipmentInput = () => {
       defaultValue={equipment ? equipment.split(",") : undefined}
       clearable
       onChange={handleEnter}
+      disabled={disabled}
     />
   );
 };

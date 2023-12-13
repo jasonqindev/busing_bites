@@ -91,10 +91,10 @@ export const loadRecipesByUserId = async (userId: string) => {
 export const loadRecipeDetailByRecipeId = async (recipeId: string) => {
   const url = `/api/recipe?id=${recipeId}`;
 
-  return await axios.get(url);
+  return (await axios.get(url)) as RecipeCardProps;
 };
 
-export const loadRecipes = async (userId: string) => {
+export const loadRecipes = async () => {
   const url = "/api/recipeAll";
 
   return await axios.get(url);

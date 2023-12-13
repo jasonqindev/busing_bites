@@ -16,6 +16,7 @@ import {
 import {
   AutoCompleteItemProps,
   Nutrient,
+  RecipeCardProps,
   RecipeProps,
   RecipeResultsProps,
 } from "types/recipeAjax";
@@ -127,7 +128,7 @@ export const useLoadRecipeInfoByManual = (
   return { run, error, recipeData, loading };
 };
 
-export const useLoadNutritionInfo = () => {
+export const useLoadNutritionInfo = (onSuccess?: () => void) => {
   const pack = async (id: string) => {
     return await loadNutritionInformation(id);
   };
@@ -135,15 +136,34 @@ export const useLoadNutritionInfo = () => {
   const { loading, run, error, data } = useRequest(pack, {
     manual: true,
     debounceWait: 500,
+    onSuccess: () => {
+      onSuccess && onSuccess();
+    },
   });
 
   return { run, error, recipeAnalyst: data, loading };
 };
 
 export const useLoadRecipes = () => {
-  const { loading, run, error, data } = useRequest(loadRecipes);
+  const {
+    loading,
+    run,
+    error,
+    data = [],
+  } = useRequest(loadRecipes, {
+    manual: true,
+  });
 
-  return { run, error, data, loading };
+  const ownRecipes: RecipeCardProps[] = Object.values(data).map(
+    (recipe: any) => {
+      return {
+        ...recipe,
+        id: recipe.recipeId,
+      };
+    }
+  );
+
+  return { run, error, ownRecipes, loading };
 };
 
 export const useLoadRecipesByUserId = () => {
@@ -151,7 +171,14 @@ export const useLoadRecipesByUserId = () => {
     return await loadRecipesByUserId(id);
   };
 
-  const { loading, run, error, data = [] } = useRequest(pack);
+  const {
+    loading,
+    run,
+    error,
+    data = [],
+  } = useRequest(pack, {
+    manual: true,
+  });
 
   const recipes = data.map((recipe: any) => {
     return {
