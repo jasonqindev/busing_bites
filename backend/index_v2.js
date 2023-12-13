@@ -151,7 +151,7 @@ function searchRecipe(req, res){
   });
 } */
 
-function getRecipe(req, res){
+function getRecipe(req, res) {
   const recipeId = req.query.id;
   const recipeRef = ref(database, `/recipes/${recipeId}`);
 
@@ -168,7 +168,7 @@ function getRecipe(req, res){
   });
 }
 
-function getRandomRecipe(req, res){
+function getRandomRecipe(req, res) {
   const searchRef = ref(database, `/search`);
 
   get(searchRef).then((snapshot) => {
@@ -194,7 +194,7 @@ function getRandomRecipe(req, res){
   });
 }
 
-function getAllRecipes(req,res){
+function getAllRecipes(req, res) {
   const recipeRef = ref(database, `/recipes`);
 
   get(recipeRef).then((snapshot) => {
@@ -210,7 +210,7 @@ function getAllRecipes(req,res){
   });
 }
 
-function getRecipeByUserId(req, res){
+function getRecipeByUserId(req, res) {
   const userId = req.query.userid;
 
   const recipesRef = ref(database, `/recipes`);
@@ -223,13 +223,13 @@ function getRecipeByUserId(req, res){
       recipes = Object.values(recipes).filter(recipe => {
         let match = false;
 
-        if(recipe.userId == userId){
+        if (recipe.userId == userId) {
           match = true;
         }
-       
+
         return match;
       });
-      
+
       res.status(200).send(recipes);
     } else {
       res.status(404).send('No recipes found');
@@ -316,8 +316,11 @@ app.get('/api/user/get/:id', (req, res) => {
 
 app.post('/api/user/create/:id', (req, res) => {
   const userId = req.params.id;
-  const userData = req.body;
-  delete userData.password; // please god do not store this in the database in pain text
+  const userData = { ...req.body };
+
+  delete userData.password; // please god do not store this in the database in plain text
+  userData.password = undefined;
+
   const userRef = ref(database, `/users/${userId}`);
   set(userRef, userData)
     .then(() => {
@@ -378,7 +381,7 @@ app.get('/api/recipeRandom', (req, res) => {
 });
 
 app.get('/api/recipeAll', (req, res) => {
-  getAllRecipes(req,res);
+  getAllRecipes(req, res);
 });
 
 app.get('/api/recipeUserId', (req, res) => {
