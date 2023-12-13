@@ -1,14 +1,15 @@
-import styles from "./nutritionAnalyst.module.scss";
-import DragBox from "components/dnd/dragBox";
-import RecipeInput from "components/formComponents/recipeInput";
-import { FC, useEffect, useRef, useState } from "react";
-import { RecipeCardProps } from "types/recipeAjax";
-import RecipeItem from "./components/recipeItem";
 import { Box, LoadingOverlay, ScrollArea } from "@mantine/core";
-import { useDispatch } from "react-redux";
+import { FC, useEffect, useRef, useState } from "react";
+
+import DragBox from "components/dnd/dragBox";
+import { RecipeCardProps } from "types/recipeAjax";
+import RecipeInput from "components/formComponents/recipeInput";
+import RecipeItem from "./components/recipeItem";
 import { changeSelectedId } from "store/reducer/analyst";
-import { useLoadRecipeData } from "hooks/useLoadRecipe";
+import styles from "./nutritionAnalyst.module.scss";
 import throttle from "lodash.throttle";
+import { useDispatch } from "react-redux";
+import { useLoadRecipeData } from "hooks/useLoadRecipe";
 import { useLocation } from "react-router-dom";
 
 interface PropsType {
@@ -63,7 +64,7 @@ const RecipeSearch: FC<PropsType> = ({ recipes, setRecipes }) => {
   return (
     <div className={styles.searchField}>
       <div className={styles.searchInput}>
-        <RecipeInput label={"recipe search"} />
+        <RecipeInput label={"Search Recipes"} />
       </div>
       <ScrollArea
         viewportRef={scrollDom}

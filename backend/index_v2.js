@@ -313,6 +313,7 @@ app.get('/api/user/get/:id', (req, res) => {
 app.post('/api/user/create/:id', (req, res) => {
   const userId = req.params.id;
   const userData = req.body;
+  delete userData.password; // please god do not store this in the database in pain text
   const userRef = ref(database, `/users/${userId}`);
   set(userRef, userData)
     .then(() => {

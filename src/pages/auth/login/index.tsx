@@ -28,9 +28,9 @@ import {
   userStateListener,
 } from "../../../firebase/firebase";
 
+import { HOME_PAGE } from "const";
 import SocialButton from "./components/socialbutton";
 import styles from "./login.module.scss";
-import { HOME_PAGE } from "const";
 
 const Login: FC = () => {
   const [email, setEmail] = useState("");
@@ -99,16 +99,6 @@ const Login: FC = () => {
             />
           </Stack>
 
-          <Group justify="space-between" mt="lg">
-            <Checkbox label="Remember me" />
-            <Anchor
-              component="button"
-              size="sm"
-              onClick={() => navigate("/auth/forgot")}
-            >
-              Forgot password?
-            </Anchor>
-          </Group>
 
           <Group justify="space-between" mt="lg">
             <Button
@@ -119,6 +109,17 @@ const Login: FC = () => {
             >
               Login
             </Button>
+          </Group>
+          
+          <Group justify="space-between" mt="lg">
+            <Checkbox label="Remember me" />
+            <Anchor
+              component="button"
+              size="sm"
+              onClick={() => navigate("/auth/forgot")}
+            >
+              Forgot password?
+            </Anchor>
           </Group>
 
           <Group mt="xs">
@@ -132,7 +133,7 @@ const Login: FC = () => {
           </Group>
         </form>
 
-        <Divider label="Or sign in with" labelPosition="center" my="lg" />
+        {/* <Divider label="Or sign in with" labelPosition="center" my="lg" />
 
         <SocialButton icon={<BsGoogle />} fullWidth>
           Sign in with Google
@@ -148,7 +149,7 @@ const Login: FC = () => {
         </SocialButton>
         <SocialButton icon={<BsApple />} fullWidth mt="xs">
           Sign in with Apple
-        </SocialButton>
+        </SocialButton> */}
       </Paper>
     </div>
   );

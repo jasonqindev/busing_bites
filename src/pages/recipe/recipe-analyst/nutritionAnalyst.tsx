@@ -1,21 +1,22 @@
-import { FC, useEffect } from "react";
-import styles from "./nutritionAnalyst.module.scss";
 import {
+  Blockquote,
   Box,
-  Title,
+  Center,
   RingProgress,
   Text,
-  Blockquote,
-  Center,
+  Title,
 } from "@mantine/core";
-import { useGetRecipeAnalyst } from "hooks/useGetRecipeAnalyst";
-import ChartBox from "./components/pieChart";
-import ProgressBox from "./components/progress";
-import { MdTipsAndUpdates } from "react-icons/md";
+import { FC, useEffect } from "react";
 import { nutrientColor, nutritionTips } from "./utils";
+
+import ChartBox from "./components/pieChart";
 import GlycemicInfo from "./components/glycemicInfo";
-import { useLoadNutritionInfo } from "hooks/useLoadRecipe";
+import { MdTipsAndUpdates } from "react-icons/md";
 import PlaceholderComp from "components/placeholderComp";
+import ProgressBox from "./components/progress";
+import styles from "./nutritionAnalyst.module.scss";
+import { useGetRecipeAnalyst } from "hooks/useGetRecipeAnalyst";
+import { useLoadNutritionInfo } from "hooks/useLoadRecipe";
 
 const NutritionAnalyst: FC = () => {
   const { selectedId } = useGetRecipeAnalyst();
@@ -33,7 +34,7 @@ const NutritionAnalyst: FC = () => {
       <div className={styles.calculatorContainer}>
         <PlaceholderComp
           img="/images/analyst.jpg"
-          title="click a recipe to show the analyst"
+          title="Select a recipe to show the analyst"
           imgHeight={300}
         />
       </div>
@@ -50,12 +51,12 @@ const NutritionAnalyst: FC = () => {
       <Box>
         <ChartBox
           caloricBreakdown={caloricBreakdown}
-          title="Caloric breakdown from recipe"
+          title="Calorie Breakdown"
         />
       </Box>
       <Box mb={30}>
         <Title order={2} mb={20}>
-          Percent of daily needs
+          % of Daily Reference Intake
         </Title>
         {nutrients.map((n, index) => (
           <ProgressBox {...n} key={index} />

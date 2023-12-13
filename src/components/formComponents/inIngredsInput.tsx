@@ -14,8 +14,8 @@ const IncludeIngredsInput = () => {
 
   return (
     <TagsInput
-      label="specific ingredients to include"
-      placeholder="include ingredients"
+      label="Ingredients to include"
+      placeholder="Include ingredients"
       defaultValue={
         includeIngredients ? includeIngredients.split(",") : undefined
       }

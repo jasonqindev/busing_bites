@@ -14,8 +14,8 @@ const EquipmentInput = () => {
 
   return (
     <TagsInput
-      label="equipment"
-      placeholder="enter equipment"
+      label="Equipment"
+      placeholder="Select equipment"
       defaultValue={equipment ? equipment.split(",") : undefined}
       clearable
       onChange={handleEnter}

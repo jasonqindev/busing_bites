@@ -13,15 +13,16 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import styles from "../profile.module.scss";
 import { isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
-import { useAuth } from "context/auth-context";
-import { useUpdateUserinfo } from "hooks/useLoadUserinfo";
-import toast from "react-hot-toast";
-import { useAuthCheck } from "hooks/useAuthCheck";
-import { useUploadImg } from "hooks/useUpload";
+
 import { default_avatar } from "const";
+import styles from "../profile.module.scss";
+import toast from "react-hot-toast";
+import { useAuth } from "context/auth-context";
+import { useAuthCheck } from "hooks/useAuthCheck";
+import { useUpdateUserinfo } from "hooks/useLoadUserinfo";
+import { useUploadImg } from "hooks/useUpload";
 
 const dietPlan: ComboboxItem[] = [
   {
@@ -57,12 +58,12 @@ function UserinfoPage() {
     },
 
     validate: {
-      firstName: isNotEmpty("first name can not be empty"),
-      lastName: isNotEmpty("last name can not be empty"),
-      age: isInRange({ min: 5, max: 99 }, "You must set 5-99"),
-      height: isNotEmpty("height can not be empty"),
-      weight: isNotEmpty("weight can not be empty"),
-      dietPlan: isNotEmpty("diet plan can not be empty"),
+      firstName: isNotEmpty("First name can not be empty"),
+      lastName: isNotEmpty("Last name can not be empty"),
+      age: isInRange({ min: 5, max: 150 }, "Are you really < 5 or > 150 years old?"),
+      height: isNotEmpty("Height can not be empty"),
+      weight: isNotEmpty("Weight can not be empty"),
+      // dietPlan: isNotEmpty("diet plan can not be empty"),
     },
   });
 
@@ -74,7 +75,7 @@ function UserinfoPage() {
 
   const { run: updateUserinfo, loading } = useUpdateUserinfo((data) => {
     setDisabled(!disabled);
-    toast.success("update userinfo successfully");
+    toast.success("Profile updated successfully!");
     setCurrentUser({ ...currentUser, ...data });
   });
 
@@ -145,7 +146,7 @@ function UserinfoPage() {
       <form className={styles.form}>
         <Box mb={30}>
           <Text fw={500} mb={15}>
-            avatar
+            Profile Picture
           </Text>
           <Image mb={15} src={form.values.avatar}></Image>
           <FileButton onChange={handleAvatar} accept="image/png,image/jpeg">
@@ -160,7 +161,7 @@ function UserinfoPage() {
           <TextInput
             readOnly
             style={{ width: "400px" }}
-            label="email"
+            label="Email Address"
             {...form.getInputProps("email")}
             description={"readonly"}
           />
@@ -168,7 +169,7 @@ function UserinfoPage() {
         <Box className={styles.fromItemGroup} mb={30}>
           <TextInput
             readOnly
-            label="username"
+            label="Username"
             {...form.getInputProps("username")}
             description={"readonly"}
           />
@@ -176,14 +177,14 @@ function UserinfoPage() {
         <Box className={styles.fromItemGroup} mb={30}>
           <TextInput
             readOnly={disabled}
-            label="first name"
+            label="First name"
             maxLength={20}
             mr={30}
             {...form.getInputProps("firstName")}
           />
           <TextInput
             readOnly={disabled}
-            label="last name"
+            label="Last name"
             maxLength={20}
             {...form.getInputProps("lastName")}
           />
@@ -191,8 +192,8 @@ function UserinfoPage() {
         <Box className={styles.fromItemGroup} mb={30}>
           <Select
             readOnly={disabled}
-            label="gender"
-            data={["male", "female"]}
+            label="Gender"
+            data={["male", "female", "other"]}
             {...form.getInputProps("gender")}
           />
         </Box>
@@ -200,7 +201,7 @@ function UserinfoPage() {
           <NumberInput
             readOnly={disabled}
             mr={20}
-            label="age"
+            label="Age"
             maxLength={2}
             hideControls
             {...form.getInputProps("age")}
@@ -211,14 +212,14 @@ function UserinfoPage() {
             readOnly={disabled}
             rightSection={<Text style={{ flex: "0 0 40px" }}>cm</Text>}
             mr={20}
-            label="height"
+            label="Height"
             maxLength={3}
             {...form.getInputProps("height")}
           />
           <NumberInput
             readOnly={disabled}
             rightSection={<Text style={{ flex: "0 0 40px" }}>kg</Text>}
-            label="weight"
+            label="Weight"
             maxLength={3}
             {...form.getInputProps("weight")}
           />
@@ -226,7 +227,7 @@ function UserinfoPage() {
         <Box className={styles.fromItemGroup}>
           <Select
             readOnly={disabled}
-            label="diet plan"
+            label="Diet plan"
             data={dietPlan}
             {...form.getInputProps("dietPlan")}
           />

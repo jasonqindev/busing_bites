@@ -1,5 +1,5 @@
-import { cuisines } from "utils/recipeData";
 import { Select } from "@mantine/core";
+import { cuisines } from "utils/recipeData";
 import { useUrlQueryParam } from "utils";
 
 const CuisinesSelect = () => {
@@ -7,9 +7,9 @@ const CuisinesSelect = () => {
 
   return (
     <Select
-      placeholder="pick a cuisine type"
+      placeholder="Select a cuisine type"
       value={cuisine}
-      label="cuisine"
+      label="Cuisine"
       data={cuisines}
       clearable
       onChange={(value) => {

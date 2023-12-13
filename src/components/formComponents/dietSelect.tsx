@@ -1,5 +1,5 @@
-import { diets } from "utils/recipeData";
 import { Select } from "@mantine/core";
+import { diets } from "utils/recipeData";
 import { useUrlQueryParam } from "utils";
 
 const DietSelect = () => {
@@ -7,9 +7,9 @@ const DietSelect = () => {
 
   return (
     <Select
-      placeholder="pick a diet type"
+      placeholder="Select a diet type"
       value={diet}
-      label="diet"
+      label="Diet"
       data={diets}
       clearable
       onChange={(value) => {

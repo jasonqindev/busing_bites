@@ -22,15 +22,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { FC } from "react";
 import styles from "./header.module.scss";
 import { useAuth } from "context/auth-context";
-import { FC } from "react";
 
 const navBar = [
   { title: "Home", href: HOME_PAGE },
-  { title: "Recipe list", href: RECIPES_PAGE },
-  { title: "Recipe Analyst", href: RECIPES_ANALYST_PAGE },
-  { title: "Recipe Create", href: RECIPES_CREATE_PAGE },
+  { title: "Browse Recipes", href: RECIPES_PAGE },
+  { title: "Analyze", href: RECIPES_ANALYST_PAGE },
+  { title: "Submit", href: RECIPES_CREATE_PAGE },
   { title: "About Us", href: ABOUT_US_PAGE },
 ];
 

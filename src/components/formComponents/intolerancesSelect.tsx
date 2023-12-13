@@ -7,9 +7,9 @@ const IntolerancesSelect = () => {
 
   return (
     <Select
-      placeholder="select allergies"
+      placeholder="Select allergens"
       value={intolerances}
-      label="allergies"
+      label="Allergens"
       data={intolerancesList}
       clearable
       onChange={(value) => {

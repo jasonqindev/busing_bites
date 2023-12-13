@@ -49,21 +49,21 @@ const RecipeCreate = () => {
     },
 
     validate: {
-      title: isNotEmpty("recipe name can not be empty"),
-      image: isNotEmpty("recipe image has to be uploaded"),
+      title: isNotEmpty("Recipe name can not be empty"),
+      image: isNotEmpty("Recipe image has to be uploaded"),
       // diets: isNotEmpty("diets can not be empty"),
-      dishTypes: isNotEmpty("dish type can not be empty"),
-      readyInMinutes: isNotEmpty("time can not be empty"),
-      servings: isNotEmpty("servings can not be empty"),
-      ingredients: isNotEmpty("ingredients can not be empty"),
+      dishTypes: isNotEmpty("Dish type can not be empty"),
+      readyInMinutes: isNotEmpty("Time can not be empty"),
+      servings: isNotEmpty("Servings can not be empty"),
+      ingredients: isNotEmpty("Ingredients can not be empty"),
       steps: {
-        step: isNotEmpty("step can not be empty"),
+        step: isNotEmpty("Must include a step description"),
       },
     },
   });
 
   const { run: submit } = useUploadRecipe(() => {
-    toast.success("recipe submit successfully!", { duration: 2000 });
+    toast.success("Recipe submitted successfully!", { duration: 2000 });
     setTimeout(() => {
       nav(PROFILE_PAGE);
     }, 2000);
@@ -99,7 +99,7 @@ const RecipeCreate = () => {
   return (
     <div className={styles.recipePage}>
       <Paper shadow="xl" radius="lg" className={styles.container}>
-        <Title mb={20}>Create your own Recipe</Title>
+        <Title mb={20}>Submit your own Recipe</Title>
 
         <form>
           <Title order={3} pt={30} mb={20}>
@@ -107,13 +107,13 @@ const RecipeCreate = () => {
           </Title>
           <Box className={styles.formItem}>
             <TextInput
-              label="recipe name"
-              placeholder="name a recipe"
+              label="Title"
+              placeholder="Name your recpie"
               {...form.getInputProps("title")}
             />
           </Box>
           <Box className={styles.formItem}>
-            <Text className={styles.title}>Upload recipe image</Text>
+            <Text className={styles.title}>Recipe Cover Image</Text>
             <ImageUpload image={form.values.image} setImage={handleImage} />
           </Box>
           <Title order={3} pt={30} mb={20}>
@@ -121,9 +121,9 @@ const RecipeCreate = () => {
           </Title>
           <Box className={[styles.formItem, styles.twoInLine].join(" ")}>
             <NumberInput
-              label="food serving"
-              placeholder="serving"
-              suffix="&nbsp;serving"
+              label="Servings"
+              placeholder="Servings"
+              suffix="&nbsp;servings"
               hideControls
               allowNegative={false}
               mr={30}
@@ -132,8 +132,8 @@ const RecipeCreate = () => {
               {...form.getInputProps("servings")}
             />
             <NumberInput
-              label="cooking times"
-              placeholder="minutes"
+              label="Prep Time"
+              placeholder="Minutes"
               suffix="&nbsp;minutes"
               allowNegative={false}
               hideControls
@@ -143,8 +143,8 @@ const RecipeCreate = () => {
           <Group grow mb={20} align="start" className={styles.SelectBox}>
             <Box>
               <MultiSelect
-                label="diet"
-                placeholder="select food's diets"
+                label="Diets"
+                placeholder="Select diets"
                 data={diets}
                 mr={30}
                 {...form.getInputProps("diets")}
@@ -152,8 +152,8 @@ const RecipeCreate = () => {
             </Box>
             <Box>
               <MultiSelect
-                label="cuisine"
-                placeholder="select cuisine"
+                label="Cuisine"
+                placeholder="Select cuisine"
                 data={foodType}
                 mr={30}
                 {...form.getInputProps("dishTypes")}
@@ -162,8 +162,8 @@ const RecipeCreate = () => {
           </Group>
           <Box className={styles.formItem}>
             <TagsInput
-              label="include ingredients"
-              placeholder="Enter ingredients"
+              label="Ingredients"
+              placeholder="Select ingredients"
               {...form.getInputProps("ingredients")}
             />
           </Box>
@@ -180,19 +180,19 @@ const RecipeCreate = () => {
                 <Box className={styles.content}>
                   <Textarea
                     autosize
-                    placeholder="instruct each step"
+                    placeholder="Explain this step"
                     minRows={2}
                     mb={20}
                     {...form.getInputProps(`steps.${index}.step`)}
                   />
                   <Box className={styles.twoInLine}>
                     <TagsInput
-                      placeholder="Enter ingredients"
+                      placeholder="Select ingredients"
                       mr={30}
                       {...form.getInputProps(`steps.${index}.ingredients`)}
                     />
                     <TagsInput
-                      placeholder="Enter equipment"
+                      placeholder="Select equipment"
                       {...form.getInputProps(`steps.${index}.equipment`)}
                     />
                   </Box>

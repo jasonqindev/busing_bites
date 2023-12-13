@@ -1,7 +1,7 @@
-import { useState } from "react";
+import OptionBox from "./components/optionBox";
 import SearchBox from "./components/searchBox";
 import styles from "./home.module.scss";
-import OptionBox from "./components/optionBox";
+import { useState } from "react";
 
 function Home() {
   const [panelStatus, setPanelStatus] = useState(() => {
@@ -15,7 +15,7 @@ function Home() {
   return (
     <div className={styles.homePage}>
       <div className={styles.searchContainer}>
-        <h1 className={styles.title}>The Recipe of Food Paradise!</h1>
+        <h1 className={styles.title}>The Recipes of Food Paradise!</h1>
         <SearchBox
           panelStatus={panelStatus}
           handlePanelStatus={handlePanelStatus}

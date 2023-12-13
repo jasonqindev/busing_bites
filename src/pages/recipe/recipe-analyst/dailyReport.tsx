@@ -1,9 +1,10 @@
-import styles from "./nutritionAnalyst.module.scss";
 import { Drawer, Title } from "@mantine/core";
+import { FC, useEffect } from "react";
+
+import ProgressBox from "./components/progress";
+import styles from "./nutritionAnalyst.module.scss";
 import { useGetRecipeAnalyst } from "hooks/useGetRecipeAnalyst";
 import { useLoadBulkRecipeInfo } from "hooks/useLoadRecipe";
-import { FC, useEffect } from "react";
-import ProgressBox from "./components/progress";
 
 interface PropsType {
   status: boolean;
@@ -35,7 +36,7 @@ const DailyReport: FC<PropsType> = ({ status, onCloseModal }) => {
     >
       <div className={styles.drawerContainer}>
         <Title order={2} mb={30}>
-          Daily Meat Report
+          Daily Meal Report
         </Title>
         {nutrients.map((n, index) => (
           <ProgressBox {...n} key={index} />

@@ -1,10 +1,11 @@
-import styles from "./nutritionAnalyst.module.scss";
-import DropBox from "components/dnd/dropBox";
 import { Box, Button, Center, Title } from "@mantine/core";
+
+import DropBox from "components/dnd/dropBox";
 import { FC } from "react";
 import { RecipeCardProps } from "types/recipeAjax";
 import RecipeItem from "./components/recipeItem";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import styles from "./nutritionAnalyst.module.scss";
 
 const planArea = ["breakfast", "lunch", "dinner"];
 
@@ -17,7 +18,7 @@ interface PropsType {
   deleteFromArea: (r_id: number, areaId: string) => void;
 }
 
-const DailyMeatArea: FC<PropsType> = ({
+const DailyMealArea: FC<PropsType> = ({
   breakfastList,
   lunchList,
   dinnerList,
@@ -39,7 +40,7 @@ const DailyMeatArea: FC<PropsType> = ({
             : dinnerList;
         return (
           <div key={area} className={styles.recipePlan}>
-            <Title order={5}>{area}</Title>
+            <Title order={5}>{area[0].toUpperCase()+area.substring(1)}</Title>
             <DropBox id={area}>
               <div className={styles.dropArea}>
                 {list.map((c) => (
@@ -76,11 +77,11 @@ const DailyMeatArea: FC<PropsType> = ({
             changeReportModal(!reportModalStatus);
           }}
         >
-          Generate Daily Meat Report
+          Generate Daily Meal Report
         </Button>
       </Center>
     </div>
   );
 };
 
-export default DailyMeatArea;
+export default DailyMealArea;

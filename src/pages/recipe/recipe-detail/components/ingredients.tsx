@@ -1,7 +1,7 @@
-import styles from "./components.module.scss";
-
 import { Blockquote, Title } from "@mantine/core";
+
 import { BiDish } from "react-icons/bi";
+import styles from "./components.module.scss";
 
 const Ingredients = ({ extendedIngredients = [] }: any) => {
   return (
@@ -11,7 +11,7 @@ const Ingredients = ({ extendedIngredients = [] }: any) => {
       </Title>
       <Blockquote
         color="blue"
-        cite="—— Ingredients you should prepared!"
+        cite="—— Ingredients"
         icon={<BiDish />}
         mt="xl"
       >

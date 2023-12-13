@@ -1,5 +1,5 @@
-import { FC } from "react";
 import { DragOverlay } from "@dnd-kit/core";
+import { FC } from "react";
 
 interface PropsType {
   children: JSX.Element;
