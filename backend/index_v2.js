@@ -372,6 +372,14 @@ app.get('/api/recipeRandom', (req, res) => {
   getRandomRecipe(req, res);
 });
 
+app.get('/api/recipeAll', (req, res) => {
+  getAllRecipes(req,res);
+});
+
+app.get('/api/recipeUserId', (req, res) => {
+  getRecipeByUserId(req, res);
+});
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
