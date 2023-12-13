@@ -45,10 +45,10 @@ function submitRecipe(req, res) {
       image: req.body.image,
       title: req.body.title,
       dishTypes: req.body.dishTypes,
-      diets: req.body.diets,
+      diets: req.body.diets ?? [],
       ingredients: req.body.ingredients,
-      allergies: req.body.allergies,
-      cuisine: req.body.cuisine
+      allergies: req.body.allergies ?? [],
+      cuisine: req.body.cuisine ?? []
     };
 
     const searchRef = ref(database, `/search/${recipeKey}`);
@@ -211,7 +211,7 @@ function getRecipeByUserId(req, res){
 
   const searchRef = ref(database, `/recipes`);
 
-  get(recipesRef).then((snapshot) => {
+  get(searchRef).then((snapshot) => {
     if (snapshot.exists()) {
       let recipes = snapshot.val();
 
