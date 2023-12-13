@@ -41,6 +41,7 @@ function submitRecipe(req, res) {
 
     const recipeSearch = {
       id: recipeKey,
+      userId: req.body.userId,
       image: req.body.image,
       title: req.body.title,
       dishTypes: req.body.dishTypes,
@@ -189,14 +190,26 @@ function getRandomRecipe(req, res){
   });
 }
 
+function getAllRecipes(req,res){
+  const recipeRef = ref(database, `/recipes`);
 
+  get(recipeRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const recipe = snapshot.val();
+      res.status(200).send(recipe);
+    } else {
+      res.status(404).send('Recipe list not found');
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send(error);
+  });
+}
 
-//search by user id not functioning yet
-/*
 function getRecipeByUserId(req, res){
   const userId = req.query.userid;
 
-  const searchRef = ref(database, `/recipe/`);
+  const searchRef = ref(database, `/recipes`);
 
   get(recipesRef).then((snapshot) => {
     if (snapshot.exists()) {
@@ -213,9 +226,6 @@ function getRecipeByUserId(req, res){
         return match;
       });
 
-      // Limit to 20 results
-      recipes = recipes.slice(0, 20);
-
       res.status(200).send(recipes);
     } else {
       res.status(404).send('No recipes found');
@@ -225,7 +235,7 @@ function getRecipeByUserId(req, res){
     res.status(500).send(error);
   });
 }
-*/
+
 
 /**
  * Handles image submission
