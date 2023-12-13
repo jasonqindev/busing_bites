@@ -5,6 +5,7 @@ import UserinfoPage from "./components/userinfo";
 import MyRecipes from "./components/myRecipes";
 import { useLoadRecipesByUserId } from "hooks/useLoadRecipe";
 import { useAuth } from "context/auth-context";
+import { useUrlQueryParam } from "utils";
 
 const nav = [
   {
@@ -17,7 +18,8 @@ const nav = [
   },
 ];
 function Profile() {
-  const [index, setIndex] = useState(0);
+  const [{ link }, setParams] = useUrlQueryParam(["link"]);
+  const [index, setIndex] = useState(link ? 1 : 0);
   const { recipes, run: loadRecipesByUserId } = useLoadRecipesByUserId();
   const { currentUser } = useAuth();
 
@@ -53,7 +55,11 @@ function Profile() {
           ))}
         </div>
         <div className={styles.main}>
-          {index === 0 ? <UserinfoPage /> : <MyRecipes recipes={recipes} />}
+          {index === 0 ? (
+            <UserinfoPage />
+          ) : (
+            <MyRecipes recipes={recipes} setParams={setParams} />
+          )}
         </div>
       </Paper>
     </div>

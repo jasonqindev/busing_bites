@@ -76,7 +76,7 @@ const RecipeCreate = () => {
   const { run: submit } = useUploadRecipe(() => {
     toast.success("Recipe submitted successfully!", { duration: 2000 });
     setTimeout(() => {
-      nav(PROFILE_PAGE);
+      nav(`${PROFILE_PAGE}?link=submit`);
     }, 2000);
   });
 
