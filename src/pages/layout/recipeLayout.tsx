@@ -1,5 +1,5 @@
 import Header from "pages/components/header";
-import Footer from "pages/components/footer";
+
 import { Outlet, useLocation } from "react-router-dom";
 import styles from "./layout.module.scss";
 import { HOME_PAGE } from "const";

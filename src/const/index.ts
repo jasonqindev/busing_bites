@@ -5,7 +5,7 @@ export const RECIPES_CREATE_PAGE = "/recipes/create";
 export const ABOUT_US_PAGE = "/aboutUs";
 export const PROFILE_PAGE = "/profile";
 export const LOGIN_PAGE = "/auth/login";
-export const CARRER_PAGE = "/carrersPage";
+
 
 export const recipes_pageSize = 20;
 
