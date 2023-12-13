@@ -95,11 +95,11 @@ const routerConfig = createBrowserRouter([
             path: "logout",
             element: <Logout />,
           },
+          {
+            path: "forgot",
+            element: <ForgotPassword />,
+          },
         ],
-      },
-      {
-        path: "forgot",
-        element: <ForgotPassword />,
       },
       {
         path: "*",
