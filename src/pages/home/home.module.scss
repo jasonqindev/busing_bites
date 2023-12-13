@@ -14,10 +14,21 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: -230px;
+  margin-top: -240px;
   img {
-    width: 290px;
-    height: 250px;
+    width: 235px;
+    height: 200px;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .logo {
+    img {
+      width: 175px;
+      height: 150px;
+      margin-bottom: 20px;
+    }
   }
 }
 
