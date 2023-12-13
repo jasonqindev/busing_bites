@@ -39,9 +39,9 @@ function submitRecipe(req, res) {
   newRecipeRef.then(() => {
     const recipeKey = newRecipeRef.key; // Access the key of the new recipe
 
-    const recipeidsubmit = ref(database, `/recipes/${recipeKey}/recipeId`);
+    const recipeIdSubmit = ref(database, `/recipes/${recipeKey}/recipeId`);
 
-    set(recipeidsubmit, recipeKey);
+    set(recipeIdSubmit, recipeKey);
 
     const recipeSearch = {
       id: recipeKey,
