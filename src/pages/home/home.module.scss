@@ -7,14 +7,18 @@
   background-image: url(../../../public/images/bg.png);
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  //background-attachment: fixed;
 }
 
 .logo {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  width: 120px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: -250px;
+  img {
+    width: 290px;
+    height: 250px;
+  }
 }
 
 .searchContainer {
@@ -27,5 +31,5 @@
 .title {
   font-size: 32px;
   margin: 0 0 10px;
-  color: #fff;
+  color: #ffffff;
 }

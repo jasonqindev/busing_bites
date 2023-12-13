@@ -1,5 +1,4 @@
 import {
-  ABOUT_US_PAGE,
   HOME_PAGE,
   LOGIN_PAGE,
   PROFILE_PAGE,
@@ -7,6 +6,7 @@ import {
   RECIPES_CREATE_PAGE,
   RECIPES_PAGE,
   default_avatar,
+  ABOUT_US_PAGE,
 } from "const";
 import {
   Avatar,
@@ -17,6 +17,7 @@ import {
   Image,
   Menu,
   Text,
+  Input,
 } from "@mantine/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -43,18 +44,25 @@ const Header: FC<PropsType> = ({ isHome = false }) => {
   const nav = useNavigate();
   const { currentUser, signOut } = useAuth();
 
+  const handleSearch = (query: string) => {
+    // Perform search logic here
+    console.log("Searching for:", query);
+  };
+
   return (
     <header className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
       <Group>
-        <Box
-          className={styles.logo}
-          mr={100}
-          onClick={() => {
-            nav(HOME_PAGE);
-          }}
-        >
-          <Image src="/images/logo_s.png" />
-        </Box>
+        {!isHome && (
+          <Box
+            className={styles.logo}
+            mr={100}
+            onClick={() => {
+              nav(HOME_PAGE);
+            }}
+          >
+            <Image src="/images/logo_s.png" />
+          </Box>
+        )}
 
         <Box className={styles.navbar}>
           {navBar.map((nav, index) => (

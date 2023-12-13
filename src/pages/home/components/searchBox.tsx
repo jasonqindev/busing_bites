@@ -13,7 +13,7 @@ import { useAuthCheck } from "hooks/useAuthCheck";
 interface PropsType {
   panelStatus: boolean;
   handlePanelStatus: (status: boolean) => void;
-}
+   }
 
 const SearchBox: FC<PropsType> = ({ panelStatus, handlePanelStatus }) => {
   const nav = useNavigate();

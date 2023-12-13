@@ -6,6 +6,7 @@ export const ABOUT_US_PAGE = "/aboutUs";
 export const PROFILE_PAGE = "/profile";
 export const LOGIN_PAGE = "/auth/login";
 
+
 export const recipes_pageSize = 20;
 
 export const autoCompleteSize = 15;

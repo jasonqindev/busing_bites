@@ -1,3 +1,4 @@
+import { Image } from "@mantine/core";
 import OptionBox from "./components/optionBox";
 import SearchBox from "./components/searchBox";
 import styles from "./home.module.scss";
@@ -15,12 +16,17 @@ function Home() {
   return (
     <div className={styles.homePage}>
       <div className={styles.searchContainer}>
-        <h1 className={styles.title}>The Recipes of Food Paradise!</h1>
+        <div className={styles.logo}>
+          <Image src="/images/logo.png" />
+        </div>
+        <h1 className={styles.title}>
+          Let's explore the tastes of the world together!
+        </h1>
         <SearchBox
           panelStatus={panelStatus}
           handlePanelStatus={handlePanelStatus}
         />
-        <OptionBox panelStatus={panelStatus} />I
+        <OptionBox panelStatus={panelStatus} />
       </div>
     </div>
   );
