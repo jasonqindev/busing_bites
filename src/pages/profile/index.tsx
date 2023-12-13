@@ -1,8 +1,10 @@
 import { Center, Paper, Title } from "@mantine/core";
 import styles from "./profile.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserinfoPage from "./components/userinfo";
 import MyRecipes from "./components/myRecipes";
+import { useLoadRecipesByUserId } from "hooks/useLoadRecipe";
+import { useAuth } from "context/auth-context";
 
 const nav = [
   {
@@ -16,6 +18,14 @@ const nav = [
 ];
 function Profile() {
   const [index, setIndex] = useState(0);
+  const { recipes, run: loadRecipesByUserId } = useLoadRecipesByUserId();
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    if (currentUser && currentUser.uid) {
+      loadRecipesByUserId(currentUser.uid);
+    }
+  }, [currentUser]); //eslint-disable-line
 
   const handleTabs = (i: number) => {
     if (i !== index) {
@@ -43,7 +53,7 @@ function Profile() {
           ))}
         </div>
         <div className={styles.main}>
-          {index === 0 ? <UserinfoPage /> : <MyRecipes recipes={[]} />}
+          {index === 0 ? <UserinfoPage /> : <MyRecipes recipes={recipes} />}
         </div>
       </Paper>
     </div>

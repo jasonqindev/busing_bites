@@ -8,7 +8,10 @@ import {
   loadBulkRecipeInformation,
   loadComplexSearchService,
   loadNutritionInformation,
+  loadRecipeDetailByRecipeId,
   loadRecipeInformation,
+  loadRecipes,
+  loadRecipesByUserId,
 } from "services/recipe";
 import {
   AutoCompleteItemProps,
@@ -73,9 +76,7 @@ export const useLoadRecipeInfo = (id: string) => {
     return await loadRecipeInformation(id);
   };
 
-  const { loading, error, data } = useRequest(pack, {
-    debounceWait: 500,
-  });
+  const { loading, error, data } = useRequest(pack);
 
   const recipeData = (data ?? {}) as RecipeProps;
 
@@ -137,4 +138,39 @@ export const useLoadNutritionInfo = () => {
   });
 
   return { run, error, recipeAnalyst: data, loading };
+};
+
+export const useLoadRecipes = () => {
+  const { loading, run, error, data } = useRequest(loadRecipes);
+
+  return { run, error, data, loading };
+};
+
+export const useLoadRecipesByUserId = () => {
+  const pack = async (id: string) => {
+    return await loadRecipesByUserId(id);
+  };
+
+  const { loading, run, error, data = [] } = useRequest(pack);
+
+  const recipes = data.map((recipe: any) => {
+    return {
+      ...recipe,
+      id: recipe.recipeId,
+    };
+  });
+
+  return { run, error, recipes, loading };
+};
+
+export const useLoadRecipeDetailByRecipeId = (id: string) => {
+  const pack = async () => {
+    return await loadRecipeDetailByRecipeId(id);
+  };
+
+  const { loading, error, data } = useRequest(pack);
+
+  const recipeData = (data ?? {}) as RecipeProps;
+
+  return { error, recipeData, loading };
 };

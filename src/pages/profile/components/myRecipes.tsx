@@ -8,13 +8,13 @@ interface PropsType {
   recipes: RecipeCardProps[];
 }
 
-const MyRecipes: FC<PropsType> = ({ recipes }) => {
+const MyRecipes: FC<PropsType> = ({ recipes = [] }) => {
   return (
     <div className={styles.mainPage}>
       <Title className={styles.title}>My Recipes</Title>
       <Flex direction={"row"} wrap={"wrap"} className={styles.recipes}>
-        {recipes.map((recipe) => {
-          return <RecipeCard key={recipe.id} {...recipe} />;
+        {recipes?.map((recipe) => {
+          return <RecipeCard key={recipe.id} {...recipe} isOwn={true} />;
         })}
       </Flex>
     </div>

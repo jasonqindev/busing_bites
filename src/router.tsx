@@ -13,6 +13,7 @@ import Register from "pages/auth/register";
 import Verify from "pages/auth/verify";
 import ForgotPassword from "pages/auth/forgot";
 import Profile from "pages/profile";
+import MyRecipeDetail from "pages/recipe/own-recipe-detail";
 
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
@@ -41,6 +42,10 @@ const routerConfig = createBrowserRouter([
           {
             path: "create",
             element: <RecipeCreate />,
+          },
+          {
+            path: "my/:id",
+            element: <MyRecipeDetail />,
           },
         ],
       },
@@ -93,12 +98,12 @@ const routerConfig = createBrowserRouter([
         ],
       },
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: "forgot",
         element: <ForgotPassword />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

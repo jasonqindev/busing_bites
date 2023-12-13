@@ -3,6 +3,7 @@ import axios from "./ajax";
 import {
   AnalystProps,
   AutoCompleteItemProps,
+  RecipeCardProps,
   RecipeProps,
   RecipeResultsProps,
   UploadProps,
@@ -79,4 +80,22 @@ export const uploadRecipe = async (data: UploadRecipeProps) => {
   const url = "/api/submit-recipe";
 
   return await axios.post(url, data);
+};
+
+export const loadRecipesByUserId = async (userId: string) => {
+  const url = `/api/recipeUserId?userid=${userId}`;
+
+  return (await axios.get(url)) as RecipeCardProps[];
+};
+
+export const loadRecipeDetailByRecipeId = async (recipeId: string) => {
+  const url = `/api/recipe?id=${recipeId}`;
+
+  return await axios.get(url);
+};
+
+export const loadRecipes = async (userId: string) => {
+  const url = "/api/recipeAll";
+
+  return await axios.get(url);
 };

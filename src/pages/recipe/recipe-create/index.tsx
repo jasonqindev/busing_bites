@@ -21,17 +21,20 @@ import ImageUpload from "./components/imageUpload";
 import { PROFILE_PAGE } from "const";
 import styles from "./recipeCreate.module.scss";
 import toast from "react-hot-toast";
-import { useAuth } from "context/auth-context";
 import { useAuthCheck } from "hooks/useAuthCheck";
 import { useNavigate } from "react-router-dom";
 import { useUploadRecipe } from "hooks/useUpload";
+import { useEffect } from "react";
+import { useAuth } from "context/auth-context";
 
 const RecipeCreate = () => {
   const nav = useNavigate();
-  const { currentUser } = useAuth();
   const { checkAuth } = useAuthCheck();
+  const { currentUser } = useAuth();
+
   const form = useForm({
     initialValues: {
+      userId: "",
       title: "",
       image: "",
       readyInMinutes: 30,
@@ -61,6 +64,14 @@ const RecipeCreate = () => {
       },
     },
   });
+
+  useEffect(() => {
+    if (currentUser) {
+      form.setValues({
+        userId: currentUser.uid,
+      });
+    }
+  }, [currentUser]); //eslint-disable-line
 
   const { run: submit } = useUploadRecipe(() => {
     toast.success("Recipe submitted successfully!", { duration: 2000 });
@@ -92,8 +103,7 @@ const RecipeCreate = () => {
     const { hasErrors } = form.validate();
     if (hasErrors) return;
     const data = form.getTransformedValues();
-    const dataWithUser = { userId: currentUser?.uid, ...data }
-    submit(dataWithUser);
+    submit(data);
   };
 
   return (

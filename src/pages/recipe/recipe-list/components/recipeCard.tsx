@@ -15,10 +15,15 @@ const RecipeCard = ({
   dishTypes = [],
   readyInMinutes,
   servings,
-}: RecipeCardProps) => {
+  isOwn = false,
+}: RecipeCardProps & { isOwn?: boolean }) => {
   const nav = useNavigate();
   const handleShowDetail = () => {
-    nav(`/recipes/${id}`);
+    if (isOwn) {
+      nav(`/recipes/my/${id}`);
+    } else {
+      nav(`/recipes/${id}`);
+    }
   };
   return (
     <Card
