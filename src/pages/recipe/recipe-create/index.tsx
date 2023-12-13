@@ -1,31 +1,34 @@
-import { isNotEmpty, useForm } from "@mantine/form";
 import {
-  Title,
-  TextInput,
-  NumberInput,
-  Box,
-  Text,
-  MultiSelect,
-  TagsInput,
-  Textarea,
-  Center,
-  Button,
-  Paper,
   ActionIcon,
+  Box,
+  Button,
+  Center,
   Group,
+  MultiSelect,
+  NumberInput,
+  Paper,
+  TagsInput,
+  Text,
+  TextInput,
+  Textarea,
+  Title,
 } from "@mantine/core";
-import styles from "./recipeCreate.module.scss";
+import { diets, foodType } from "utils/recipeData";
+import { isNotEmpty, useForm } from "@mantine/form";
+
 import { BsFillTrashFill } from "react-icons/bs";
 import ImageUpload from "./components/imageUpload";
-import { diets, foodType } from "utils/recipeData";
-import { useUploadRecipe } from "hooks/useUpload";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { PROFILE_PAGE } from "const";
+import styles from "./recipeCreate.module.scss";
+import toast from "react-hot-toast";
+import { useAuth } from "context/auth-context";
 import { useAuthCheck } from "hooks/useAuthCheck";
+import { useNavigate } from "react-router-dom";
+import { useUploadRecipe } from "hooks/useUpload";
 
 const RecipeCreate = () => {
   const nav = useNavigate();
+  const { currentUser } = useAuth();
   const { checkAuth } = useAuthCheck();
   const form = useForm({
     initialValues: {
@@ -48,7 +51,7 @@ const RecipeCreate = () => {
     validate: {
       title: isNotEmpty("recipe name can not be empty"),
       image: isNotEmpty("recipe image has to be uploaded"),
-      diets: isNotEmpty("diets can not be empty"),
+      // diets: isNotEmpty("diets can not be empty"),
       dishTypes: isNotEmpty("dish type can not be empty"),
       readyInMinutes: isNotEmpty("time can not be empty"),
       servings: isNotEmpty("servings can not be empty"),
@@ -89,7 +92,8 @@ const RecipeCreate = () => {
     const { hasErrors } = form.validate();
     if (hasErrors) return;
     const data = form.getTransformedValues();
-    submit(data);
+    const dataWithUser = { userId: currentUser?.uid, ...data }
+    submit(dataWithUser);
   };
 
   return (
