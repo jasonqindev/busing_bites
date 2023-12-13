@@ -7,7 +7,12 @@ const Procedure = ({ steps = [] }: any) => {
       <Title order={2} mb={50}>
         Cooking Instructions
       </Title>
-      <Timeline color="green" bulletSize={30} lineWidth={2}>
+      <Timeline
+        active={steps.length}
+        color="green"
+        bulletSize={30}
+        lineWidth={2}
+      >
         {steps.map((procedure: any, index: number) => {
           const { step = "", ingredients = [], equipment = [] } = procedure;
           return (
