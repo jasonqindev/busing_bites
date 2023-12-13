@@ -209,7 +209,7 @@ function getAllRecipes(req,res){
 function getRecipeByUserId(req, res){
   const userId = req.query.userid;
 
-  const searchRef = ref(database, `/recipes`);
+  const recipesRef = ref(database, `/recipes`);
 
   get(searchRef).then((snapshot) => {
     if (snapshot.exists()) {
